@@ -1,8 +1,9 @@
 <template>
-  <UCard :ui="ui" />
+  <v-card title="login" @click="router.push('/login')"> </v-card>
 </template>
 
 <script setup>
+const router = useRouter();
 const ui = {
   background: "bg-white dark:bg-slate-900",
 };

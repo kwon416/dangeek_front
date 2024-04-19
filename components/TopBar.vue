@@ -7,7 +7,7 @@
       <v-btn icon :to="backPath">
         <IconBackBtn />
       </v-btn>
-      <v-app-bar-title class="flex text-center mx-0">
+      <v-app-bar-title class="text-center mx-0">
         {{ title }}
       </v-app-bar-title>
       <template v-slot:extension v-if="tabList">

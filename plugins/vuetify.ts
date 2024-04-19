@@ -50,7 +50,7 @@ export default defineNuxtPlugin((app) => {
         elevation: 0,
       },
       VToolbarTitle: {
-        class: "title-t18-bold",
+        class: "title-t20-bold",
       },
       VWindow: {
         disabled: true,
