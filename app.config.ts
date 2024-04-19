@@ -1,9 +1,9 @@
 export default defineAppConfig({
   ui: {
-    primary: "green",
+    primary: "white",
     button: {
       default: {
-        color: "primary",
+        color: "white",
         loadingIcon: "i-octicon-sync-24",
       },
     },

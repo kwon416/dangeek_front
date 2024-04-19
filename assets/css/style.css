@@ -1,0 +1,230 @@
+@charset "UTF-8";
+/* override vuetify */
+.v-btn::before {
+  opacity: 0 !important;
+  background-color: red !important;
+}
+.v-btn__content {
+  color: #fff;
+  font-family: Pretendard;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+.no-effect .v-btn__overlay {
+  display: none !important;
+  visibility: hidden !important;
+}
+.no-effect .v-ripple__container {
+  opacity: 0 !important;
+}
+.no-background-hover::before {
+  background-color: transparent !important;
+}
+.v-card__overlay {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+.v-list-item__overlay {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+.v-card-title {
+  font-family: Pretendard;
+  font-size: 18px !important;
+  font-style: normal;
+  font-weight: 700 !important;
+  line-height: normal;
+}
+
+/* text-style */
+
+.title-t26-bold {
+  font-family: Pretendard;
+  font-size: 26px !important;
+  font-style: normal;
+  font-weight: 700 !important;
+  line-height: normal;
+}
+
+.title-t20-regular {
+  font-family: Pretendard;
+  font-size: 20px !important;
+  font-style: normal;
+  font-weight: 500 !important;
+  line-height: normal;
+}
+
+.title-t18-bold {
+  font-family: Pretendard;
+  font-size: 18px !important;
+  font-style: normal;
+  font-weight: 700 !important;
+  line-height: normal;
+}
+.title-t17-bold {
+  font-family: Pretendard;
+  font-size: 17px !important;
+  font-style: normal;
+  font-weight: 700 !important;
+  line-height: normal;
+}
+.title-t17-light {
+  font-family: Pretendard;
+  font-size: 17px !important;
+  font-style: normal;
+  font-weight: 300 !important;
+  line-height: normal;
+}
+
+.title-t16-bold {
+  font-family: Pretendard;
+  font-size: 16px !important;
+  font-style: normal;
+  font-weight: 700 !important;
+  line-height: normal;
+}
+
+.title-t14-bold {
+  font-family: Pretendard;
+  font-size: 14px !important;
+  font-style: normal;
+  font-weight: 700 !important;
+  line-height: normal;
+}
+
+.title-t14-medium {
+  font-family: Pretendard;
+  font-size: 14px !important;
+  font-style: normal;
+  font-weight: 500 !important;
+  line-height: normal;
+}
+
+.title-t13-regular {
+  font-family: Pretendard;
+  font-size: 13px !important;
+  font-style: normal;
+  font-weight: 400 !important;
+  line-height: normal;
+}
+
+.title-t12-bold {
+  font-family: Pretendard;
+  font-size: 12px !important;
+  font-style: normal;
+  font-weight: 700 !important;
+  line-height: normal;
+}
+
+.title-t12-regular {
+  font-family: Pretendard;
+  font-size: 12px !important;
+  font-style: normal;
+  font-weight: 400 !important;
+  line-height: normal;
+}
+
+.title-t11-regular-grey {
+  font-family: Pretendard;
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 13px;
+  letter-spacing: 0em;
+  color: #26262699;
+}
+
+.banner-title-pp {
+  color: var(--color-cb-100, #6d4f2a);
+  font-family: PyeongChang Peace;
+  font-size: 28px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.banner-text-pp {
+  color: var(--color-cb-100, #6d4f2a);
+  font-family: "NanumSquare Neo";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 14px;
+}
+
+/* WebView CSS Setting */
+* {
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+input,
+textarea {
+  -moz-user-select: text;
+  -webkit-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+}
+.-clamp-1,
+.-clamp-2,
+.-clamp-3,
+.-clamp-4,
+.-clamp-5,
+.-clamp-6,
+.-clamp-7,
+.-clamp-8,
+.-clamp-9,
+.-clamp-10 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+}
+.-clamp-1 {
+  -webkit-line-clamp: 1;
+}
+.-clamp-2 {
+  -webkit-line-clamp: 2;
+}
+.-clamp-3 {
+  -webkit-line-clamp: 3;
+}
+.-clamp-4 {
+  -webkit-line-clamp: 4;
+}
+.-clamp-5 {
+  -webkit-line-clamp: 5;
+}
+.-clamp-6 {
+  -webkit-line-clamp: 6;
+}
+.-clamp-7 {
+  -webkit-line-clamp: 7;
+}
+.-clamp-8 {
+  -webkit-line-clamp: 8;
+}
+.-clamp-9 {
+  -webkit-line-clamp: 9;
+}
+.-clamp-10 {
+  -webkit-line-clamp: 10;
+}
+
+.-hand {
+  cursor: pointer;
+}
+.-shadow {
+  box-shadow: 0px 0px 15px 0px rgba(154 161 171 / 7%) !important;
+}
+.-shadow2 {
+  box-shadow: 0px 0px 25px 0px rgba(154 161 171 / 7%) !important;
+}
+.-subtext {
+  font-size: 0.825rem;
+  color: rgba(0 0 0 / 50%);
+}

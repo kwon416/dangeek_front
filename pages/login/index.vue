@@ -1,77 +1,111 @@
 <template>
-  <div class="login-container">
-    <div class="logo">
-      <img src="~/assets/img/logo_title.svg" alt="Dan Geek" />
+  <v-main>
+    <div class="wrapper">
+      <v-container>
+        <v-img
+          :width="97"
+          :heigth="100"
+          class="mx-auto"
+          style="margin-bottom: 81px"
+          alt="Dan GEEK"
+          src="~/assets/img/logo_title.svg"
+        />
+
+        <v-form validate-on="submit lazy" @submit.prevent="submit">
+          <v-text-field
+            hide-details="auto"
+            variant="outlined"
+            v-model="userName"
+            rounded="10"
+            :rules="rules"
+            density="comfortable"
+            style="margin-bottom: 21px"
+            label="이메일을 입력해주세요"
+          ></v-text-field>
+
+          <v-text-field
+            hide-details="auto"
+            variant="outlined"
+            v-model="userName"
+            rounded="10"
+            density="comfortable"
+            :rules="rules"
+            style="margin-bottom: 35px"
+            label="패스워드를 입력해주세요"
+          ></v-text-field>
+          <v-btn
+            :loading="loading"
+            text="로그인"
+            type="submit"
+            block
+            :height="53"
+          ></v-btn
+        ></v-form>
+
+        <p
+          style="
+            margin-top: 16px;
+            text-align: center;
+            color: #939393;
+            font-family: Pretendard;
+            font-size: 13px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: normal;
+          "
+        >
+          <span @click="router.push('/')">비밀번호 찾기</span> |
+          <span @click="router.push('/login/signup')">회원가입</span>
+        </p>
+      </v-container>
     </div>
-    <form @submit.prevent="submitLogin">
-      <input
-        type="email"
-        v-model="loginData.email"
-        placeholder="이메일을 입력하세요"
-      />
-      <input
-        type="password"
-        v-model="loginData.password"
-        placeholder="비밀번호를 입력하세요"
-      />
-      <button type="submit" class="login-btn">로그인</button>
-    </form>
-    <div class="help-links">
-      <a href="#">비밀번호 찾기</a> | <a href="#">회원가입</a>
-    </div>
-  </div>
+  </v-main>
 </template>
 
 <script setup>
-const loginData = reactive({
-  email: "",
-  password: "",
-});
+const router = useRouter();
+const loading = ref(false);
+const userName = ref("");
+const timeout = ref(null);
 
-const submitLogin = () => {
-  console.log(loginData);
-  // Implement your login logic here
+const checkApi = (userName) => {
+  return new Promise((resolve) => {
+    clearTimeout(timeout.value);
+
+    timeout.value = setTimeout(() => {
+      if (!userName) return resolve("사용자 이름을 입력해주세요.");
+      if (userName === "johnleider")
+        return resolve(
+          "사용자 이름이 이미 사용 중입니다. 다른 이름을 시도해주세요."
+        );
+
+      return resolve(true);
+    }, 1000);
+  });
 };
+
+const submit = async (event) => {
+  loading.value = true;
+
+  const results = await event;
+
+  loading.value = false;
+
+  // alert(JSON.stringify(results, null, 2));
+  router.push("/");
+};
+
+watch(userName, (newValue) => {
+  checkApi(newValue);
+});
 </script>
 
 <style scoped>
-.login-container {
-  max-width: 400px;
-  margin: 0 auto;
-  padding: 50px 20px;
-  text-align: center;
-}
-
-.logo img {
-  max-width: 100px;
-  margin: 30px auto;
-}
-
-.login-container input {
-  width: 100%;
-  padding: 15px;
-  margin-bottom: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-.login-btn {
-  width: 100%;
-  background-color: #007aff;
-  color: white;
-  padding: 15px;
-  border: none;
-  border-radius: 4px;
-  margin-top: 20px;
-}
-
-.help-links {
-  margin-top: 20px;
-}
-
-.help-links a {
-  color: #007aff;
-  text-decoration: none;
-  margin: 0 10px;
+.wrapper {
+  background: white;
+  min-height: 100dvh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>
