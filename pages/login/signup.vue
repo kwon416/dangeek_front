@@ -1,14 +1,21 @@
 <template>
   <v-main>
-    <TopBar title="회원가입" :backPath="'/login'" />
+    <v-app-bar app :elevation="0">
+      <v-btn icon @click="pressBack()">
+        <IconBackBtn />
+      </v-btn>
+      <v-app-bar-title class="text-center mx-0"> 회원 가입 </v-app-bar-title>
+
+      <v-btn icon disabled />
+    </v-app-bar>
     <v-container>
       <v-progress-linear
-        :model-value="indicatorValue"
+        :model-value="windowNumber * 33 + 33"
         bgColor="grey"
         :rounded="true"
-        roundedBar="true"
+        :roundedBar="true"
         height="7"
-        style="width: 33%"
+        style="width: 104px"
       />
       <v-window v-model="windowNumber">
         <!-- step 1 사용자 정보 입력-->
@@ -20,50 +27,46 @@
           >
             인증받을 학교이메일을 입력해주세요
           </p>
-          <v-form validate-on="submit lazy" @submit.prevent="submit">
+          <v-form
+            validate-on="submit lazy"
+            @submit.prevent="submit"
+            v-model="valid"
+          >
             <v-text-field
               hide-details="auto"
-              variant="outlined"
-              v-model="userName"
-              rounded="10"
-              :rules="rules"
-              density="comfortable"
+              v-model="email"
+              :rules="[rules.emailRequired, rules.email]"
               style="margin-bottom: 34px"
               label="example@dankook.ac.kr"
-              :single-line="true"
             ></v-text-field>
 
             <v-text-field
               hide-details="auto"
-              variant="outlined"
-              v-model="userName"
-              rounded="10"
-              density="comfortable"
-              :rules="rules"
+              v-model="password"
+              :rules="[rules.passwordRequired]"
               style="margin-bottom: 34px"
+              type="password"
               label="비밀번호"
-              :single-line="true"
-            ></v-text-field>
+            >
+              <template v-slot:append-inner>
+                <IconPasswordNm />
+              </template>
+            </v-text-field>
             <v-text-field
               hide-details="auto"
-              variant="outlined"
-              v-model="userName"
-              rounded="10"
-              density="comfortable"
-              :rules="rules"
+              v-model="passwordConfirm"
+              :rules="[rules.passwordSame]"
               style="margin-bottom: 34px"
+              type="password"
               label="비밀번호 확인"
-              :single-line="true"
+            >
+              <template v-slot:append-inner> <IconPasswordNm /> </template
             ></v-text-field>
             <v-text-field
               hide-details="auto"
-              variant="outlined"
-              v-model="userName"
-              rounded="10"
-              density="comfortable"
-              :rules="rules"
+              v-model="nickname"
+              :rules="[rules.nicknameRequired]"
               label="닉네임"
-              :single-line="true"
             ></v-text-field>
             <v-btn
               :loading="loading"
@@ -89,13 +92,11 @@
             <div class="flex" style="margin-bottom: 310px">
               <v-text-field
                 hide-details="auto"
-                variant="outlined"
-                v-model="userName"
-                rounded="10"
-                :rules="rules"
+                v-model="certNumber"
+                :rules="[rules.certNumber]"
                 density="comfortable"
+                maxlength="6"
                 label="인증번호 입력"
-                :single-line="true"
               ></v-text-field>
               <v-btn
                 variant="outlined"
@@ -103,6 +104,7 @@
                 color="#79A1E6"
                 rounded="10"
                 class="ms-2"
+                @click="resendEmail()"
                 ><span class="title-t16-medium" style="color: #79a1e6"
                   >재발송</span
                 ></v-btn
@@ -111,12 +113,30 @@
 
             <v-btn
               :loading="loading"
-              text="학교 인증하기"
-              @click.once="submitValidate(event)"
+              :disabled="certNumber.length == 6 ? false : false"
+              text="인증완료"
+              @click="submitValidate(event)"
               block
               :height="53"
             ></v-btn
           ></v-form>
+
+          <!-- 이메일 재발송 얼럿 -->
+          <v-dialog v-model="isResendDialogOpend">
+            <v-card
+              class="pa-4"
+              style="border-radius: 15px; align-items: center"
+            >
+              <IconCheck
+                :width="33"
+                :height="33"
+                style="margin-top: 8px; margin-bottom: 18px"
+              />
+              <p class="title-t17-bold" style="margin-bottom: 3px">
+                인증번호가 재발송되었습니다
+              </p>
+            </v-card>
+          </v-dialog>
         </v-window-item>
 
         <!-- step 3 약관 동의 -->
@@ -130,38 +150,153 @@
           >
             원활한 서비스 이용을 위해 아래 내용을 검토 후 동의 해주세요
           </p>
-          <v-form validate-on="submit lazy" @submit.prevent="submit">
-            <div class="flex" style="margin-bottom: 310px">
-              <v-text-field
-                hide-details="auto"
-                variant="outlined"
-                v-model="userName"
-                rounded="10"
-                :rules="rules"
-                density="comfortable"
-                label="인증번호 입력"
-                :single-line="true"
-              ></v-text-field>
-              <v-btn
-                variant="outlined"
-                height="48"
-                color="#79A1E6"
-                rounded="10"
-                class="ms-2"
-                ><span class="title-t16-medium" style="color: #79a1e6"
-                  >재발송</span
-                ></v-btn
-              >
-            </div>
+          <!-- 전체 동의 박스 -->
+          <div
+            class="d-flex align-item-center"
+            style="border-radius: 10px; border: 1.5px solid #e8e8e8"
+          >
+            <v-checkbox v-model="allSelected" style="margin-bottom: -24px">
+              <template v-slot:append>
+                <p class="title-t16-medium" style="margin-left: -10px">
+                  전체 동의
+                </p>
+              </template>
+            </v-checkbox>
+          </div>
+          <!-- 하위 항목 -->
+          <div class="d-flex align-item-center" style="height: 43px">
+            <v-checkbox
+              v-model="selected"
+              value="check1"
+              style="margin-bottom: -24px"
+            >
+              <template v-slot:append>
+                <div class="d-flex">
+                  <div class="d-flex justify-content-between">
+                    <v-chip
+                      size="x-small"
+                      variant="outlined"
+                      color="#79A1E6"
+                      class="chip-position"
+                      >필수</v-chip
+                    >
+                    <p class="title-t14-medium" style="line-height: 20px">
+                      서비스 이용약관
+                    </p>
+                  </div>
+                </div>
+              </template>
+            </v-checkbox>
+            <IconForward class="icon-position" />
+          </div>
+          <div class="d-flex align-item-center" style="height: 43px">
+            <v-checkbox
+              v-model="selected"
+              value="check2"
+              style="margin-bottom: -24px"
+            >
+              <template v-slot:append>
+                <div class="d-flex">
+                  <div class="d-flex justify-content-between">
+                    <v-chip
+                      size="x-small"
+                      variant="outlined"
+                      color="#79A1E6"
+                      class="chip-position"
+                      >필수</v-chip
+                    >
+                    <p class="title-t14-medium" style="line-height: 20px">
+                      개인정보수집/이용동의
+                    </p>
+                  </div>
+                </div>
+              </template>
+            </v-checkbox>
+            <IconForward class="icon-position" />
+          </div>
+          <div class="d-flex align-item-center" style="height: 43px">
+            <v-checkbox
+              v-model="selected"
+              value="check3"
+              style="margin-bottom: -24px"
+            >
+              <template v-slot:append>
+                <div class="d-flex">
+                  <div class="d-flex justify-content-between">
+                    <v-chip
+                      size="x-small"
+                      variant="outlined"
+                      color="#79A1E6"
+                      class="chip-position"
+                      >필수</v-chip
+                    >
+                    <p class="title-t14-medium" style="line-height: 20px">
+                      위치기반 서비스 이용약관 동의
+                    </p>
+                  </div>
+                </div>
+              </template>
+            </v-checkbox>
+            <IconForward class="icon-position" />
+          </div>
+          <div class="d-flex align-item-center" style="height: 43px">
+            <v-checkbox
+              v-model="selected"
+              value="check4"
+              style="margin-bottom: -24px"
+            >
+              <template v-slot:append>
+                <div class="d-flex">
+                  <div class="d-flex justify-content-between">
+                    <v-chip
+                      size="x-small"
+                      variant="outlined"
+                      color="#79A1E6"
+                      class="chip-position"
+                      >필수</v-chip
+                    >
+                    <p class="title-t14-medium" style="line-height: 20px">
+                      개인정보 제3자 정보제공 동의
+                    </p>
+                  </div>
+                </div>
+              </template>
+            </v-checkbox>
+            <IconForward class="icon-position" />
+          </div>
 
-            <v-btn
-              :loading="loading"
-              text="완료"
-              type="submit"
-              block
-              :height="53"
-            ></v-btn
-          ></v-form>
+          <v-btn
+            :loading="loading"
+            text="완료"
+            :disabled="selected.length !== 4"
+            @click="completeClick()"
+            block
+            :height="53"
+            style="margin-top: 130px"
+          ></v-btn>
+
+          <!-- 회원가입 완료 다이얼로그 -->
+          <v-dialog v-model="isCompleteDialogOpend" :persistent="true">
+            <v-card
+              class="pa-4"
+              style="border-radius: 15px; align-items: center"
+            >
+              <IconCheck
+                :width="33"
+                :height="33"
+                style="margin-top: 8px; margin-bottom: 18px"
+              />
+              <p class="title-t17-bold" style="margin-bottom: 3px">
+                회원가입 완료
+              </p>
+              <p class="title-t14-grey" style="margin-bottom: 23px">
+                지금 바로 DanGeek을 이용해보세요
+              </p>
+              <v-btn @click="router.push('/')" rounded="15" class="w-100">
+                <span class="title-t16-medium">확인</span>
+              </v-btn>
+            </v-card>
+          </v-dialog>
         </v-window-item>
       </v-window>
     </v-container>
@@ -171,8 +306,42 @@
 <script setup>
 const router = useRouter();
 const loading = ref(false);
+const valid = ref(false);
 const userName = ref("");
+const email = ref("");
+const password = ref("");
+const passwordConfirm = ref("");
+const nickname = ref("");
+const certNumber = ref("");
 const timeout = ref(null);
+const isResendDialogOpend = ref(false);
+const isCompleteDialogOpend = ref(false);
+const checkList = ["check1", "check2", "check3", "check4"];
+const selected = ref([]);
+
+const allSelected = computed({
+  get() {
+    return checkList.length === selected.value.length;
+  },
+  set(newValue) {
+    newValue ? (selected.value = checkList) : (selected.value = []);
+  },
+});
+
+const rules = {
+  emailRequired: (value) => !!value || "이메일을 입력해주세요",
+  passwordRequired: (value) => !!value || "비밀번호를 입력해주세요",
+  passwordSame: (value) =>
+    value == password.value || "비밀번호가 같지 않습니다",
+  nicknameRequired: (value) => !!value || "닉네임을 입력해주세요",
+  certNumber: (value) => !!value || "인증번호를 입력해주세요",
+  counter: (value) => value.length <= 20 || "Max 20 characters",
+  email: (value) => {
+    const pattern =
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return pattern.test(value) || "유효하지 않은 이메일입니다.";
+  },
+};
 
 const windowNumber = ref(0);
 
@@ -193,6 +362,8 @@ const checkApi = (userName) => {
 };
 
 const submit = async (event) => {
+  // if (!valid.value) return;
+
   loading.value = true;
 
   const results = await event;
@@ -203,6 +374,7 @@ const submit = async (event) => {
   windowNumber.value = 1;
 };
 
+// 학교 인증하기
 const submitValidate = async (event) => {
   loading.value = true;
 
@@ -213,27 +385,40 @@ const submitValidate = async (event) => {
   windowNumber.value = 2;
 };
 
-const indicatorValue = computed(() => {
-  let persent;
-  switch (windowNumber.value) {
-    case 0:
-      persent = 33;
-      break;
-    case 1:
-      persent = 66;
-      break;
-    case 2:
-      persent = 100;
-      break;
-    default:
-      persent = 33;
-  }
-  return persent;
-});
+// watch(userName, (newValue) => {
+//   checkApi(newValue);
+// });
 
-watch(userName, (newValue) => {
-  checkApi(newValue);
-});
+function pressBack() {
+  if (windowNumber.value > 0) {
+    windowNumber.value--;
+  } else {
+    router.back();
+  }
+}
+
+function completeClick() {
+  isCompleteDialogOpend.value = true;
+  // router.push("/");
+}
+
+function resendEmail() {
+  isResendDialogOpend.value = true;
+
+  setTimeout(() => {
+    isResendDialogOpend.value = false;
+  }, 3000);
+}
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.icon-position {
+  position: absolute;
+  right: 10px;
+  margin-top: 20px;
+}
+.chip-position {
+  margin-left: -10px;
+  margin-right: 16px;
+}
+</style>

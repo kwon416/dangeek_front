@@ -3,10 +3,13 @@ import "@mdi/font/css/materialdesignicons.css";
 
 import "vuetify/styles";
 import { createVuetify, ThemeDefinition } from "vuetify";
+import { aliases, custom } from "@/utils/customIcon.ts";
 
 const dangeek: ThemeDefinition = {
   dark: false,
   colors: {
+    background: "#fff",
+    surface: "#fff",
     primary: "#023D9E",
   },
   variables: {
@@ -18,6 +21,11 @@ export default defineNuxtPlugin((app) => {
   const vuetify = createVuetify({
     // ... your configuration
     // ssr: true,
+    icons: {
+      sets: {
+        custom,
+      },
+    },
     defaults: {
       global: {
         // 잔물결 효과 제거
@@ -38,6 +46,12 @@ export default defineNuxtPlugin((app) => {
       },
       VTextField: {
         baseColor: "rgb(0 0 0 / 20%)",
+        color: "#79A1E6",
+        rounded: "10",
+        variant: "outlined",
+        singleLine: true,
+        density: "comfortable",
+        maxLength: "20",
       },
       VTextarea: {
         baseColor: "rgb(0 0 0 / 20%)",
@@ -54,6 +68,17 @@ export default defineNuxtPlugin((app) => {
       },
       VWindow: {
         disabled: true,
+      },
+      VCheckbox: {
+        falseIcon: "custom:IconCheckOff",
+        trueIcon: "custom:IconCheck",
+        ripple: false,
+        active: false,
+        hover: false,
+        elevation: 0,
+      },
+      VCard: {
+        border: "15",
       },
     },
     theme: {

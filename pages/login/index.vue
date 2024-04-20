@@ -11,28 +11,31 @@
           src="~/assets/img/logo_title.svg"
         />
 
-        <v-form validate-on="submit lazy" @submit.prevent="submit">
+        <v-form
+          validate-on="submit lazy"
+          @submit.prevent="submit"
+          v-model="form"
+        >
           <v-text-field
             hide-details="auto"
-            variant="outlined"
             v-model="userName"
-            rounded="10"
-            :rules="rules"
-            density="comfortable"
+            :rules="[rules.emailRequired]"
             style="margin-bottom: 21px"
             label="이메일을 입력해주세요"
           ></v-text-field>
 
           <v-text-field
             hide-details="auto"
-            variant="outlined"
-            v-model="userName"
-            rounded="10"
-            density="comfortable"
-            :rules="rules"
+            v-model="password"
+            :rules="[rules.passwordRequired]"
             style="margin-bottom: 35px"
             label="패스워드를 입력해주세요"
-          ></v-text-field>
+            type="password"
+          >
+            <template v-slot:append-inner>
+              <IconPasswordNm />
+            </template>
+          </v-text-field>
           <v-btn
             :loading="loading"
             text="로그인"
@@ -65,8 +68,15 @@
 <script setup>
 const router = useRouter();
 const loading = ref(false);
+const form = ref(false);
 const userName = ref("");
+const password = ref("");
 const timeout = ref(null);
+
+const rules = {
+  emailRequired: (value) => !!value || "이메일을 입력해주세요",
+  passwordRequired: (value) => !!value || "패스워드를 입력해주세요",
+};
 
 const checkApi = (userName) => {
   return new Promise((resolve) => {
@@ -95,9 +105,9 @@ const submit = async (event) => {
   router.push("/");
 };
 
-watch(userName, (newValue) => {
-  checkApi(newValue);
-});
+// watch(userName, (newValue) => {
+//   checkApi(newValue);
+// });
 </script>
 
 <style scoped>

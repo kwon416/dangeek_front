@@ -1,4 +1,5 @@
 <template>
+  <h1>홈페이지</h1>
   <v-card title="login" @click="router.push('/login')"> </v-card>
 </template>
 
