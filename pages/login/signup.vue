@@ -27,11 +27,7 @@
           >
             인증받을 학교이메일을 입력해주세요
           </p>
-          <v-form
-            validate-on="submit lazy"
-            @submit.prevent="submit"
-            v-model="valid"
-          >
+          <v-form @submit.prevent="submit" v-model="valid">
             <v-text-field
               hide-details="auto"
               v-model="email"
@@ -113,7 +109,7 @@
 
             <v-btn
               :loading="loading"
-              :disabled="certNumber.length == 6 ? false : false"
+              :disabled="certNumber.length == 6 ? false : true"
               text="인증완료"
               @click="submitValidate(event)"
               block
@@ -362,7 +358,7 @@ const checkApi = (userName) => {
 };
 
 const submit = async (event) => {
-  // if (!valid.value) return;
+  if (!valid.value) return;
 
   loading.value = true;
 

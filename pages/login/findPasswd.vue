@@ -24,7 +24,7 @@
           >
             입력한 이메일로 인증번호가 발송되었어요
           </p>
-          <v-form validate-on="submitValidate lazy" @submit.prevent="submit">
+          <v-form @submit.prevent="submit">
             <v-text-field
               hide-details="auto"
               v-model="email"
@@ -56,7 +56,7 @@
 
             <v-btn
               :loading="loading"
-              :disabled="certNumber.length == 6 ? false : false"
+              :disabled="certNumber.length == 6 ? false : true"
               text="인증완료"
               @click="submitValidate(event)"
               block
@@ -76,11 +76,7 @@
           >
             개인정보를 위해 비밀번호를 변경해주세요
           </p>
-          <v-form
-            validate-on="submit lazy"
-            @submit.prevent="submit"
-            v-model="valid"
-          >
+          <v-form @submit.prevent="submit" v-model="valid">
             <v-text-field
               hide-details="auto"
               v-model="password"
@@ -106,6 +102,11 @@
               :loading="loading"
               text="변경하기"
               @click="completeClick()"
+              :disabled="
+                password.length > 0 && password === passwordConfirm
+                  ? false
+                  : true
+              "
               block
               :height="53"
               style="margin-top: 64px"

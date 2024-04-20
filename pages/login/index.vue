@@ -11,11 +11,7 @@
           src="~/assets/img/logo_title.svg"
         />
 
-        <v-form
-          validate-on="submit lazy"
-          @submit.prevent="submit"
-          v-model="form"
-        >
+        <v-form @submit.prevent="submit" v-model="form">
           <v-text-field
             hide-details="auto"
             v-model="userName"
