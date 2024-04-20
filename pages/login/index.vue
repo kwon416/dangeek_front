@@ -57,7 +57,7 @@
             line-height: normal;
           "
         >
-          <span @click="router.push('/')">비밀번호 찾기</span> |
+          <span @click="router.push('/login/findPasswd')">비밀번호 찾기</span> |
           <span @click="router.push('/login/signup')">회원가입</span>
         </p>
       </v-container>
