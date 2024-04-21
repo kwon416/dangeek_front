@@ -63,6 +63,22 @@
               :height="53"
             ></v-btn
           ></v-form>
+          <!-- 이메일 재발송 얼럿 -->
+          <v-dialog v-model="isResendDialogOpend">
+            <v-card
+              class="pa-4"
+              style="border-radius: 15px; align-items: center"
+            >
+              <IconCheck
+                :width="33"
+                :height="33"
+                style="margin-top: 8px; margin-bottom: 18px"
+              />
+              <p class="title-t17-bold" style="margin-bottom: 3px">
+                인증번호가 재발송되었습니다
+              </p>
+            </v-card>
+          </v-dialog>
         </v-window-item>
 
         <!-- step 2 비밀번호 재설정 -->
@@ -140,6 +156,7 @@ const loading = ref(false);
 const windowNumber = ref(0);
 const email = ref("");
 const certNumber = ref("");
+const isResendDialogOpend = ref(false);
 
 const password = ref("");
 const passwordConfirm = ref("");
@@ -193,6 +210,14 @@ function pressBack() {
 function completeClick() {
   isCompleteDialogOpend.value = true;
   // router.push("/");
+}
+
+function resendEmail() {
+  isResendDialogOpend.value = true;
+
+  setTimeout(() => {
+    isResendDialogOpend.value = false;
+  }, 3000);
 }
 </script>
 
