@@ -1,4 +1,9 @@
 @charset "UTF-8";
+/* tailwind */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /* override vuetify */
 .v-btn::before {
   opacity: 0 !important;
