@@ -9,6 +9,10 @@
   opacity: 0 !important;
   background-color: red !important;
 }
+.v-btn__gradient {
+  color: linear-gradient(to left, #2a5fc5, #79a1e6) !important;
+  background: linear-gradient(to left, #2a5fc5, #79a1e6) !important;
+}
 .v-btn__content {
   color: #fff;
   font-family: Pretendard;

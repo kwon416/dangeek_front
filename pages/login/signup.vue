@@ -65,6 +65,7 @@
               label="닉네임"
             ></v-text-field>
             <v-btn
+              class="v-btn__gradient"
               :loading="loading"
               text="학교 인증하기"
               type="submit"
@@ -108,6 +109,7 @@
             </div>
 
             <v-btn
+              class="v-btn__gradient"
               :loading="loading"
               :disabled="certNumber.length == 6 ? false : true"
               text="인증완료"
@@ -262,6 +264,7 @@
           </div>
 
           <v-btn
+            class="v-btn__gradient"
             :loading="loading"
             text="완료"
             :disabled="selected.length !== 4"
@@ -288,7 +291,12 @@
               <p class="title-t14-grey" style="margin-bottom: 23px">
                 지금 바로 DanGeek을 이용해보세요
               </p>
-              <v-btn @click="router.push('/')" rounded="15" class="w-100">
+              <v-btn
+                @click="router.push('/')"
+                rounded="15"
+                class="w-100 v-btn__gradient"
+                style="height: 41px"
+              >
                 <span class="title-t16-medium">확인</span>
               </v-btn>
             </v-card>

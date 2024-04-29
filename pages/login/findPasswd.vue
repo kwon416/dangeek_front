@@ -55,6 +55,7 @@
             </div>
 
             <v-btn
+              class="v-btn__gradient"
               :loading="loading"
               :disabled="certNumber.length == 6 ? false : true"
               text="인증완료"
@@ -115,6 +116,7 @@
             ></v-text-field>
 
             <v-btn
+              class="v-btn__gradient"
               :loading="loading"
               text="변경하기"
               @click="completeClick()"
@@ -138,7 +140,12 @@
               <p class="title-t17-bold" style="margin-bottom: 26px">
                 비밀번호가 변경되었습니다
               </p>
-              <v-btn @click="router.push('/login')" rounded="15" class="w-100">
+              <v-btn
+                @click="router.push('/login')"
+                rounded="15"
+                class="w-100 v-btn__gradient"
+                style="height: 41px"
+              >
                 <span class="title-t16-medium">확인</span>
               </v-btn>
             </v-card>

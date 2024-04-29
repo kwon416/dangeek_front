@@ -33,6 +33,7 @@
             </template>
           </v-text-field>
           <v-btn
+            class="v-btn__gradient"
             :loading="loading"
             text="로그인"
             type="submit"
