@@ -68,6 +68,15 @@
   line-height: normal;
 }
 
+.title-t25-main {
+  color: #3867e7;
+  font-family: Pretendard;
+  font-size: 25px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
 .title-t20-regular {
   font-family: Pretendard;
   font-size: 20px !important;
@@ -119,6 +128,15 @@
   font-size: 16px;
   font-style: normal;
   font-weight: 600;
+  line-height: normal;
+}
+
+.title-t15-grey {
+  color: #939393;
+  font-family: Pretendard;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 500;
   line-height: normal;
 }
 
