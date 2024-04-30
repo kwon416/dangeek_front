@@ -18,7 +18,7 @@
 
       <div
         class="d-flex title-t18-bold"
-        style="justify-content: center; margin-top: 40px; color: #939393"
+        style="justify-content: center; margin-top: 18px; color: #939393"
       >
         <p
           :class="windowNumber === 0 ? 'active' : ''"
@@ -41,12 +41,31 @@
             :border="true"
             rounded="15"
             class="justify-center align-center"
-            height="245px"
           >
-            <template v-slot:title> 가장 최근 글 Top 3 </template>
-            <template v-slot:text>
-              <span>window {{ windowNumber + 1 }}</span>
+            <template v-slot:title>
+              <p
+                class="title-t16-bold"
+                style="color: #2a5fc5"
+                @click="router.push('/roommate')"
+              >
+                가장 최근 글 Top 3
+              </p>
             </template>
+            <!-- <template v-slot:text>
+              <span>window {{ windowNumber + 1 }}</span>
+            </template> -->
+            <v-list lines="two">
+              <v-list-item v-for="i in 3">
+                <template v-slot:title>
+                  <p class="title-t11-regular-grey mb-2">name님의 글 10분전</p>
+                </template>
+                <div class="d-flex">
+                  <p class="title-t14-medium">룸메이트 급하게 구합니다</p>
+                  <v-spacer />
+                  <IconForward icon-color="#2A5FC5" />
+                </div>
+              </v-list-item>
+            </v-list>
           </v-card>
         </v-window-item>
         <!-- 2. 공동 구매 -->
@@ -55,9 +74,12 @@
             :border="true"
             rounded="15"
             class="justify-center align-center"
-            height="245px"
           >
-            <template v-slot:title> 가장 최근 글 Top 3 </template>
+            <template v-slot:title>
+              <p class="title-t16-bold" style="color: #2a5fc5">
+                가장 최근 글 Top 3
+              </p>
+            </template>
             <template v-slot:text>
               <span>window {{ windowNumber + 1 }}</span>
             </template>

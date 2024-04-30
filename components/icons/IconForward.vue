@@ -8,7 +8,7 @@
   >
     <path
       d="M1 12L6.28711 6.7L1 1.413"
-      stroke="#707070"
+      :stroke="iconColor"
       stroke-width="1.5"
       stroke-linecap="round"
       stroke-linejoin="round"
@@ -16,6 +16,10 @@
   </svg>
 </template>
 
-<script setup></script>
+<script setup>
+const props = defineProps({
+  iconColor: { type: String, default: "#707070" },
+});
+</script>
 
 <style lang="scss" scoped></style>
