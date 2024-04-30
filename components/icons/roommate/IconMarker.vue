@@ -1,0 +1,62 @@
+<template>
+  <svg
+    width="42"
+    height="51"
+    viewBox="0 0 42 51"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <slot />
+    <g id="Vector" filter="url(#filter0_d_365_2495)">
+      <path
+        d="M32.1748 28.9655C32.1748 28.9655 32.1748 28.9482 32.1748 28.9395C33.7133 26.6058 34.6122 23.814 34.6122 20.8061C34.6209 12.6295 27.9914 6 19.8147 6C11.6381 6 5 12.6295 5 20.8147C5 23.814 5.89891 26.5972 7.42879 28.9309C7.42879 28.9395 7.42879 28.9568 7.43743 28.9655L7.48065 29.0173C7.8091 29.51 8.17212 29.9854 8.56107 30.4348L18.4923 43.469C19.0801 44.4803 20.5408 44.4803 21.1285 43.469L31.0598 30.4348C31.4487 29.9767 31.8118 29.51 32.1488 29.0087L32.1748 28.9655Z"
+        fill="white"
+      />
+    </g>
+    <defs>
+      <filter
+        id="filter0_d_365_2495"
+        x="0"
+        y="0"
+        width="41.6122"
+        height="50.2275"
+        filterUnits="userSpaceOnUse"
+        color-interpolation-filters="sRGB"
+      >
+        <feFlood flood-opacity="0" result="BackgroundImageFix" />
+        <feColorMatrix
+          in="SourceAlpha"
+          type="matrix"
+          values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+          result="hardAlpha"
+        />
+        <feOffset dx="1" />
+        <feGaussianBlur stdDeviation="3" />
+        <feComposite in2="hardAlpha" operator="out" />
+        <feColorMatrix
+          type="matrix"
+          values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.06 0"
+        />
+        <feBlend
+          mode="normal"
+          in2="BackgroundImageFix"
+          result="effect1_dropShadow_365_2495"
+        />
+        <feBlend
+          mode="normal"
+          in="SourceGraphic"
+          in2="effect1_dropShadow_365_2495"
+          result="shape"
+        />
+      </filter>
+    </defs>
+  </svg>
+</template>
+
+<script setup></script>
+
+<style lang="scss" scoped>
+svg {
+  filter: drop-shadow(1px 0px 6px rgba(0, 0, 0, 0.06));
+}
+</style>

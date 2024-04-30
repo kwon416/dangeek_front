@@ -205,6 +205,14 @@
   font-weight: 500;
   line-height: normal;
 }
+.title-t11-regular {
+  color: #000;
+  font-family: Pretendard;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 15px;
+}
 
 .banner-title-pp {
   color: var(--color-cb-100, #6d4f2a);

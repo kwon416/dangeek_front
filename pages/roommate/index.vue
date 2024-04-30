@@ -13,8 +13,8 @@
       <IconNotification />
       <IconMy class="ms-5" />
     </v-app-bar>
-    <v-slide-group v-if="true" :show-arrows="false" class="mt-9">
-      <v-slide-group-item v-for="i in 5">
+    <v-slide-group v-if="true" :show-arrows="false" class="mt-9 mb-5">
+      <v-slide-group-item v-for="i in 8">
         <!--                    6. 프레젠테이션 프로필 div -->
         <div class="presentation_profile">
           <!--                    7. 프로필 이미지 묶음 div -->
@@ -22,7 +22,19 @@
             <!--                            8. 프로필 테두리 div-->
             <div class="presentation_profile_image_border"></div>
             <!--                            8. 프로필 이미지 div -->
-            <div class="presentation_profile_image_canvas profile_love"></div>
+            <div class="presentation_profile_image_canvas profile_love">
+              <IconAvatar1
+                v-if="parseInt(i % 3) == 0"
+                :width="60"
+                :height="60"
+              />
+              <IconAvatar2
+                v-else-if="parseInt(i % 3) == 1"
+                :width="60"
+                :height="60"
+              />
+              <IconAvatar3 v-else :width="60" :height="60" />
+            </div>
           </div>
           <!--                    7. 프로필 이름 a-->
           <p class="presentation_profile_name">nickname</p>
@@ -30,8 +42,45 @@
       </v-slide-group-item>
     </v-slide-group>
     <div v-else>자기소개 작성하러 가기</div>
-    <v-container>
-      <v-card> tile </v-card>
+    <v-container style="background-color: #f2f4f6">
+      <v-card v-for="i in 4" class="px-6 mb-2" rounded="15">
+        <div class="d-flex">
+          <p class="title-t18-bold pt-5" style="line-height: 15px">
+            4인 여자 룸메구해요!
+          </p>
+          <v-spacer></v-spacer>
+          <div class="main_image">
+            <img src="@/assets/icons/roommate/Icon-marker.svg" alt="" />
+            <p class="main_image_text title-t11-regular">
+              <span style="color: #2a5fc5">2</span>
+              <span>/</span>
+              <span>4</span>
+            </p>
+          </div>
+        </div>
+        <div class="d-flex">
+          <p class="title-t11-regular-grey" style="color: #585858">
+            11명이 이 글을 보고있어요
+          </p>
+          <v-spacer></v-spacer>
+          <v-progress-linear
+            :model-value="50"
+            bgColor="grey"
+            :rounded="true"
+            :roundedBar="true"
+            height="7"
+            style="width: 106px"
+          />
+        </div>
+        <v-btn
+          class="v-btn__gradient mt-6 mb-5"
+          block
+          :height="41"
+          rounded="15"
+        >
+          자세히 보기
+        </v-btn>
+      </v-card>
     </v-container>
   </v-main>
 </template>
@@ -109,8 +158,17 @@
 }
 
 .profile_love {
-  background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_ui-TCUvXK4uPaSf1f7j7aLBe9ca7ycRv2Q&usqp=CAU");
+  // background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_ui-TCUvXK4uPaSf1f7j7aLBe9ca7ycRv2Q&usqp=CAU");
   background-size: cover;
   background-position: center;
+}
+.main_image {
+  position: relative;
+}
+.main_image_text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-55%, -80%);
 }
 </style>
