@@ -13,10 +13,10 @@
       <IconNotification />
       <IconMy class="ms-5" />
     </v-app-bar>
-    <v-slide-group v-if="true" :show-arrows="false" style="width: 100vw">
-      <v-slide-group-item v-for="i in 10" class="slider_item">
-        <v-avatar>
-          <!-- <v-img src="@/assets/icons/avatar/avatar_1.svg"></v-img> -->
+    <v-slide-group v-if="true" :show-arrows="false" class="mt-9">
+      <v-slide-group-item v-for="i in 5">
+        <v-avatar class="me-5">
+          <v-img src="@/assets/icons/avatar/avatar_1.svg"></v-img>
         </v-avatar>
       </v-slide-group-item>
     </v-slide-group>
