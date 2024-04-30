@@ -10,8 +10,8 @@
       </div>
 
       <v-spacer></v-spacer>
-      <IconNotification />
-      <IconMy class="ms-5" />
+      <IconNotification @click="router.push('/notification')" />
+      <IconMy class="ms-5" @click="router.push('/my')" />
     </v-app-bar>
     <v-slide-group v-if="true" :show-arrows="false" class="mt-9 mb-5">
       <v-slide-group-item v-for="i in 8">
@@ -46,7 +46,7 @@
       <v-card v-for="i in 4" class="px-6 mb-2" rounded="15">
         <div class="d-flex">
           <p class="title-t18-bold pt-5" style="line-height: 15px">
-            4인 여자 룸메구해요!
+            4인 여자 룸메 구해요!
           </p>
           <v-spacer></v-spacer>
           <div class="main_image">
@@ -85,7 +85,9 @@
   </v-main>
 </template>
 
-<script setup></script>
+<script setup>
+const router = useRouter();
+</script>
 
 <style lang="scss" scoped>
 .title {

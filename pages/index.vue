@@ -1,6 +1,6 @@
 <template>
-  <v-main>
-    <v-app-bar class="px-6">
+  <v-main style="background-color: #f2f4f6">
+    <v-app-bar class="px-6" style="background-color: #f2f4f6">
       <IconLogo />
       <p class="title-t25-main ps-2">DAN GEEK</p>
 
@@ -10,7 +10,11 @@
     </v-app-bar>
 
     <v-container>
-      <v-text-field rounded="30" label="궁금한 것을 적어보세요!">
+      <v-text-field
+        rounded="30"
+        label="궁금한 것을 적어보세요!"
+        bg-color="#fff"
+      >
         <template v-slot:prepend-inner>
           <IconSearch />
         </template>
@@ -38,16 +42,12 @@
         <!-- 1. 룸메 찾기 -->
         <v-window-item>
           <v-card
-            :border="true"
             rounded="15"
             class="justify-center align-center"
+            @click="router.push('/roommate')"
           >
             <template v-slot:title>
-              <p
-                class="title-t16-bold"
-                style="color: #2a5fc5"
-                @click="router.push('/roommate')"
-              >
+              <p class="title-t16-bold" style="color: #2a5fc5">
                 가장 최근 글 Top 3
               </p>
             </template>
@@ -70,11 +70,7 @@
         </v-window-item>
         <!-- 2. 공동 구매 -->
         <v-window-item>
-          <v-card
-            :border="true"
-            rounded="15"
-            class="justify-center align-center"
-          >
+          <v-card rounded="15" class="justify-center align-center">
             <template v-slot:title>
               <p class="title-t16-bold" style="color: #2a5fc5">
                 가장 최근 글 Top 3
@@ -86,6 +82,7 @@
           </v-card>
         </v-window-item>
       </v-window>
+      <v-spacer></v-spacer>
     </v-container>
   </v-main>
 
