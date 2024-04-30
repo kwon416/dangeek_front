@@ -15,13 +15,24 @@
     </v-app-bar>
     <v-slide-group v-if="true" :show-arrows="false" class="mt-9">
       <v-slide-group-item v-for="i in 5">
-        <v-avatar class="me-5">
-          <v-img src="@/assets/icons/avatar/avatar_1.svg"></v-img>
-        </v-avatar>
+        <!--                    6. 프레젠테이션 프로필 div -->
+        <div class="presentation_profile">
+          <!--                    7. 프로필 이미지 묶음 div -->
+          <div class="presentation_profile_image">
+            <!--                            8. 프로필 테두리 div-->
+            <div class="presentation_profile_image_border"></div>
+            <!--                            8. 프로필 이미지 div -->
+            <div class="presentation_profile_image_canvas profile_love"></div>
+          </div>
+          <!--                    7. 프로필 이름 a-->
+          <p class="presentation_profile_name">nickname</p>
+        </div>
       </v-slide-group-item>
     </v-slide-group>
     <div v-else>자기소개 작성하러 가기</div>
-    <v-container> </v-container>
+    <v-container>
+      <v-card> tile </v-card>
+    </v-container>
   </v-main>
 </template>
 
@@ -40,5 +51,66 @@
   margin-right: 1.2rem;
   width: 24.3rem;
   height: 15.7rem;
+}
+.presentation_profile {
+  justify-content: center;
+  align-items: center;
+}
+/* 프레젠테이션 프로필 이미지 div */
+.presentation_profile_image {
+  background-color: white;
+  width: 72px;
+  height: 88px;
+  margin-right: 6px;
+  margin-left: 6px;
+
+  /* 아이템을 수평, 수직 가운데 정렬하는 코드 */
+  display: flex;
+  flex-direction: column;
+  /* 방향을 row로 바꾸면 한 줄로 나온다! */
+  justify-content: center;
+  align-items: center;
+}
+
+/* 프레젠테이션 프로필 이미지 캔버스 */
+.presentation_profile_image_canvas {
+  background-color: grey;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  position: absolute;
+}
+
+/* 프레젠테이션 프로필 이름 div */
+.presentation_profile_name {
+  width: 84px;
+  color: #000;
+  text-align: center;
+  font-feature-settings: "clig" off, "liga" off;
+  font-family: Pretendard;
+  font-size: 11.5px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 22px; /* 191.304% */
+}
+
+/* 프로필 이미지 테두리 div */
+.presentation_profile_image_border {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  /* 원 안에 그라디언트 속성을 넣으려면 먼저 투명을 해야함 */
+  border: 2.5px solid transparent;
+  background-image: linear-gradient(#fff, #fff),
+    linear-gradient(225deg, #c913b9, #f9373f, #fecd00);
+  background-origin: border-box;
+  background-clip: content-box, border-box;
+  position: absolute;
+}
+
+.profile_love {
+  background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_ui-TCUvXK4uPaSf1f7j7aLBe9ca7ycRv2Q&usqp=CAU");
+  background-size: cover;
+  background-position: center;
 }
 </style>

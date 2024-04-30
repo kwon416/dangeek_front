@@ -5,8 +5,8 @@
       <p class="title-t25-main ps-2">DAN GEEK</p>
 
       <v-spacer></v-spacer>
-      <IconNotification />
-      <IconMy class="ms-5" />
+      <IconNotification @click="router.push('/notification')" />
+      <IconMy class="ms-5" @click="router.push('/my')" />
     </v-app-bar>
 
     <v-container>
