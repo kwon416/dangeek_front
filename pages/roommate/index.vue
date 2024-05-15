@@ -90,13 +90,9 @@
       @click="navigateTo('/')"
       :active="false"
     >
-      <template v-if="homeActive">
-        <IconHomeActive />
-      </template>
-      <template v-else>
-        <IconHome />
-      </template>
-      <span class="gnb-span" :class="homeActive ? 'active' : ''">홈</span>
+      <IconHome />
+
+      <span class="gnb-span">홈</span>
     </v-btn>
     <v-btn
       class="no-background-hover"
@@ -114,13 +110,9 @@
       @click="navigateTo('/chat')"
       :active="false"
     >
-      <template v-if="chatActive">
-        <IconChatActive />
-      </template>
-      <template v-else>
-        <IconChat />
-      </template>
-      <span class="gnb-span" :class="chatActive ? 'active' : ''">채팅하기</span>
+      <IconChat />
+
+      <span class="gnb-span">채팅하기</span>
     </v-btn>
     <v-btn
       class="no-background-hover"
@@ -128,15 +120,9 @@
       @click="navigateTo('/group')"
       :active="false"
     >
-      <template v-if="groupActive">
-        <IconGroupActive />
-      </template>
-      <template v-else>
-        <IconGroup />
-      </template>
-      <span class="gnb-span" :class="groupActive ? 'active' : ''"
-        >공동구매</span
-      >
+      <IconGroup />
+
+      <span class="gnb-span">공동구매</span>
     </v-btn>
     <v-btn
       class="no-background-hover"
@@ -144,15 +130,9 @@
       @click="navigateTo('/complain')"
       :active="false"
     >
-      <template v-if="complainActive">
-        <IconComplainActive />
-      </template>
-      <template v-else>
-        <IconComplain />
-      </template>
-      <span class="gnb-span" :class="complainActive ? 'active' : ''"
-        >민원신청</span
-      >
+      <IconComplain />
+
+      <span class="gnb-span">민원신청</span>
     </v-btn>
   </v-bottom-navigation>
 </template>

@@ -22,20 +22,39 @@
 
       <div
         class="d-flex title-t18-bold"
-        style="justify-content: center; margin-top: 18px; color: #939393"
+        style="
+          justify-content: center;
+          margin-top: 18px;
+          margin-bottom: 18px;
+          color: #939393;
+        "
       >
         <p
           :class="windowNumber === 0 ? 'active' : ''"
           @click="windowNumber = 0"
+          style="padding-right: 9px"
         >
           룸메찾기
         </p>
+        <template v-if="windowNumber === 0">
+          <IconMainRoommateActive />
+        </template>
+        <template v-else>
+          <IconMainRoommate />
+        </template>
         <p
           :class="windowNumber === 1 ? 'active' : ''"
           @click="windowNumber = 1"
+          style="padding-right: 9px; margin-left: 36px"
         >
           공동구매
         </p>
+        <template v-if="windowNumber === 1">
+          <IconMainGroupActive />
+        </template>
+        <template v-else>
+          <IconMainGroup />
+        </template>
       </div>
 
       <v-window v-model="windowNumber">
@@ -57,7 +76,10 @@
             <v-list lines="two">
               <v-list-item v-for="i in 3">
                 <template v-slot:title>
-                  <p class="title-t11-regular-grey mb-2">name님의 글 10분전</p>
+                  <p class="title-t11-regular-grey mb-2">
+                    <span>name님의 글</span>
+                    <span style="padding-left: 11px">10분전</span>
+                  </p>
                 </template>
                 <div class="d-flex">
                   <p class="title-t14-medium">룸메이트 급하게 구합니다</p>
@@ -82,11 +104,84 @@
           </v-card>
         </v-window-item>
       </v-window>
+      <v-slide-group
+        :show-arrows="false"
+        style="width: 100vw; margin-left: -24px"
+      >
+        <v-slide-group-item v-for="i in 3">
+          <v-card rounded="15" class="justify-center align-center meal-card">
+            <template v-slot:title>
+              <div class="d-flex">
+                <p class="title-t19-bold me-2" style="color: #fff">
+                  오늘의 조식
+                </p>
+                <IconRice />
+              </div>
+            </template>
+            <MealContent />
+          </v-card>
+        </v-slide-group-item>
+      </v-slide-group>
       <v-spacer></v-spacer>
     </v-container>
-  </v-main>
+    <v-container>
+      <v-btn block :height="53" color="#CED3DC">
+        <p style="color: #585858">외박 신청 하기</p>
+      </v-btn>
+    </v-container>
+    <v-bottom-navigation horizontal>
+      <v-btn
+        class="no-background-hover"
+        style="width: 20%"
+        @click="navigateTo('/')"
+        :active="false"
+      >
+        <IconHomeActive />
 
-  <v-card title="login" @click="router.push('/login')"> </v-card>
+        <span class="gnb-span" style="color: #79a1e6">홈</span>
+      </v-btn>
+      <v-btn
+        class="no-background-hover"
+        style="width: 20%"
+        @click="navigateTo('/roommate')"
+        :active="false"
+      >
+        <IconRoommate />
+
+        <span class="gnb-span">룸메이트</span>
+      </v-btn>
+      <v-btn
+        class="no-background-hover"
+        style="width: 20%"
+        @click="navigateTo('/chat')"
+        :active="false"
+      >
+        <IconChat />
+
+        <span class="gnb-span">채팅하기</span>
+      </v-btn>
+      <v-btn
+        class="no-background-hover"
+        style="width: 20%"
+        @click="navigateTo('/group')"
+        :active="false"
+      >
+        <IconGroup />
+
+        <span class="gnb-span">공동구매</span>
+      </v-btn>
+      <v-btn
+        class="no-background-hover"
+        style="width: 20%"
+        @click="navigateTo('/complain')"
+        :active="false"
+      >
+        <IconComplain />
+
+        <span class="gnb-span">민원신청</span>
+      </v-btn>
+    </v-bottom-navigation>
+  </v-main>
 </template>
 
 <script setup>
@@ -96,7 +191,7 @@ const windowNumber = ref(0);
 definePageMeta({
   title: "Home",
   description: "Home page",
-  layout: "home",
+  // layout: "home",
 });
 </script>
 
@@ -112,5 +207,23 @@ definePageMeta({
 
 .active {
   color: #3867e7;
+}
+
+.meal-card {
+  margin-right: 40px;
+  margin-top: 38px;
+  padding: 11px 44px 11px 18px;
+  width: 284px;
+  height: 180px;
+  background: linear-gradient(153deg, #79a1e6 13.19%, #3867e7 86.57%);
+}
+.gnb-span {
+  color: #939393;
+  font-family: Pretendard;
+  font-size: 9px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  padding-top: 9px;
 }
 </style>
