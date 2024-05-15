@@ -118,17 +118,17 @@
                 <IconRice />
               </div>
             </template>
-            <MealContent />
+            <MealContent class="ms-4 mt-3" />
           </v-card>
         </v-slide-group-item>
       </v-slide-group>
-      <v-spacer></v-spacer>
     </v-container>
     <v-container>
       <v-btn block :height="53" color="#CED3DC">
         <p style="color: #585858">외박 신청 하기</p>
       </v-btn>
     </v-container>
+    <v-spacer></v-spacer>
     <v-bottom-navigation horizontal>
       <v-btn
         class="no-background-hover"
@@ -212,7 +212,7 @@ definePageMeta({
 .meal-card {
   margin-right: 40px;
   margin-top: 38px;
-  padding: 11px 44px 11px 18px;
+  padding: 11px 14px 11px 18px;
   width: 284px;
   height: 180px;
   background: linear-gradient(153deg, #79a1e6 13.19%, #3867e7 86.57%);
