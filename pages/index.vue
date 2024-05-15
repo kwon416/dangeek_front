@@ -92,6 +92,12 @@
 <script setup>
 const router = useRouter();
 const windowNumber = ref(0);
+
+definePageMeta({
+  title: "Home",
+  description: "Home page",
+  layout: "home",
+});
 </script>
 
 <style scoped>

@@ -87,6 +87,11 @@
 
 <script setup>
 const router = useRouter();
+definePageMeta({
+  title: "Roommate",
+  description: "Roommate page",
+  layout: "home",
+});
 </script>
 
 <style lang="scss" scoped>
