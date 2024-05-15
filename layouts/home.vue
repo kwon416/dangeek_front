@@ -51,10 +51,10 @@
         :active="false"
       >
         <template v-if="groupActive">
-          <IconHomeActive />
+          <IconGroupActive />
         </template>
         <template v-else>
-          <IconHome />
+          <IconGroup />
         </template>
         <span :class="groupActive ? 'active' : ''">공동구매</span>
       </v-btn>
@@ -65,10 +65,10 @@
         :active="false"
       >
         <template v-if="complainActive">
-          <IconHomeActive />
+          <IconComplainActive />
         </template>
         <template v-else>
-          <IconHome />
+          <IconComplain />
         </template>
         <span :class="complainActive ? 'active' : ''">민원신청</span>
       </v-btn>

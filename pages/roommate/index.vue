@@ -83,6 +83,78 @@
       </v-card>
     </v-container>
   </v-main>
+  <v-bottom-navigation horizontal>
+    <v-btn
+      class="no-background-hover"
+      style="width: 20%"
+      @click="navigateTo('/')"
+      :active="false"
+    >
+      <template v-if="homeActive">
+        <IconHomeActive />
+      </template>
+      <template v-else>
+        <IconHome />
+      </template>
+      <span class="gnb-span" :class="homeActive ? 'active' : ''">홈</span>
+    </v-btn>
+    <v-btn
+      class="no-background-hover"
+      style="width: 20%"
+      @click="navigateTo('/roommate')"
+      :active="false"
+    >
+      <IconRoommateActive />
+
+      <span class="gnb-span" style="color: #79a1e6">룸메이트</span>
+    </v-btn>
+    <v-btn
+      class="no-background-hover"
+      style="width: 20%"
+      @click="navigateTo('/chat')"
+      :active="false"
+    >
+      <template v-if="chatActive">
+        <IconChatActive />
+      </template>
+      <template v-else>
+        <IconChat />
+      </template>
+      <span class="gnb-span" :class="chatActive ? 'active' : ''">채팅하기</span>
+    </v-btn>
+    <v-btn
+      class="no-background-hover"
+      style="width: 20%"
+      @click="navigateTo('/group')"
+      :active="false"
+    >
+      <template v-if="groupActive">
+        <IconGroupActive />
+      </template>
+      <template v-else>
+        <IconGroup />
+      </template>
+      <span class="gnb-span" :class="groupActive ? 'active' : ''"
+        >공동구매</span
+      >
+    </v-btn>
+    <v-btn
+      class="no-background-hover"
+      style="width: 20%"
+      @click="navigateTo('/complain')"
+      :active="false"
+    >
+      <template v-if="complainActive">
+        <IconComplainActive />
+      </template>
+      <template v-else>
+        <IconComplain />
+      </template>
+      <span class="gnb-span" :class="complainActive ? 'active' : ''"
+        >민원신청</span
+      >
+    </v-btn>
+  </v-bottom-navigation>
 </template>
 
 <script setup>
@@ -90,11 +162,20 @@ const router = useRouter();
 definePageMeta({
   title: "Roommate",
   description: "Roommate page",
-  layout: "home",
+  // layout: "home", //레이아웃 문제로 주석처리
 });
 </script>
 
 <style lang="scss" scoped>
+.gnb-span {
+  color: #939393;
+  font-family: Pretendard;
+  font-size: 9px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  padding-top: 9px;
+}
 .title {
   color: #121212;
   font-family: Pretendard;
