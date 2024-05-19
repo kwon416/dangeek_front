@@ -4,7 +4,8 @@
     style="position: fixed; top: 0px; left: 0px; width: 100%; z-index: 99999999"
   >
     <v-app-bar app :elevation="0">
-      <v-btn icon :to="backPath">
+      <!-- <v-btn icon :to="backPath"> -->
+      <v-btn icon @click="router.back()">
         <IconBackBtn />
       </v-btn>
       <v-app-bar-title class="text-center mx-0">
@@ -36,6 +37,7 @@
 const props = defineProps(["title", "backPath", "tabList", "callBack"]);
 const model = defineModel();
 const tab = ref();
+const router = useRouter();
 function selectTab() {
   //console.log(tab.value)
   model.value = tab.value;

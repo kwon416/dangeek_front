@@ -1,20 +1,23 @@
 <template>
-  <v-app-bar class="px-6">
-    <IconMoney />
-    <div style="height: 60px; margin-left: -2px; margin-top: auto">
-      <p class="title">
-        <span style="color: #79a1e6; font-size: 20px">name</span> 님!
-      </p>
-      <p class="title">공동구매로 돈을 절약해보세요.</p>
-    </div>
+  <v-main>
+    <v-app-bar class="px-6">
+      <IconMoney />
+      <div style="height: 60px; margin-left: -2px; margin-top: auto">
+        <p class="title">
+          <span style="color: #79a1e6; font-size: 20px">name</span> 님!
+        </p>
+        <p class="title">공동구매로 돈을 절약해보세요.</p>
+      </div>
 
-    <v-spacer></v-spacer>
-    <IconNotification @click="router.push('/notification')" />
-    <IconMy class="ms-5" @click="router.push('/my')" />
-  </v-app-bar>
+      <v-spacer></v-spacer>
+      <IconNotification @click="router.push('/notification')" />
+      <IconMy class="ms-5" @click="router.push('/my')" />
+    </v-app-bar>
+  </v-main>
 </template>
 
 <script setup>
+const router = useRouter();
 definePageMeta({
   title: "Group",
   description: "Group page",
