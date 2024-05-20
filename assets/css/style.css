@@ -172,6 +172,14 @@
   line-height: normal;
 }
 
+.title-t14-medium {
+  font-family: Pretendard;
+  font-size: 14px !important;
+  font-style: normal;
+  font-weight: 500 !important;
+  line-height: normal;
+}
+
 .title-t13-regular {
   font-family: Pretendard;
   font-size: 13px !important;
