@@ -16,7 +16,10 @@
     <v-slide-group v-if="true" :show-arrows="false" class="mt-9 mb-5">
       <v-slide-group-item v-for="i in 8">
         <!--                    6. 프레젠테이션 프로필 div -->
-        <div class="presentation_profile">
+        <div
+          class="presentation_profile"
+          @click="router.push('/roommate/story')"
+        >
           <!--                    7. 프로필 이미지 묶음 div -->
           <div class="presentation_profile_image">
             <!--                            8. 프로필 테두리 div-->
