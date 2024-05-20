@@ -79,6 +79,7 @@ export default defineNuxtPlugin((app) => {
       },
       VCard: {
         border: "15",
+        elevation: "0",
       },
     },
     theme: {
