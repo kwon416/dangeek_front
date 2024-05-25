@@ -129,58 +129,6 @@
       </v-btn>
     </v-container>
     <v-spacer></v-spacer>
-    <v-bottom-navigation horizontal>
-      <v-btn
-        class="no-background-hover"
-        style="width: 20%"
-        @click="navigateTo('/')"
-        :active="false"
-      >
-        <IconHomeActive />
-
-        <span class="gnb-span" style="color: #79a1e6">홈</span>
-      </v-btn>
-      <v-btn
-        class="no-background-hover"
-        style="width: 20%"
-        @click="navigateTo('/roommate')"
-        :active="false"
-      >
-        <IconRoommate />
-
-        <span class="gnb-span">룸메이트</span>
-      </v-btn>
-      <v-btn
-        class="no-background-hover"
-        style="width: 20%"
-        @click="navigateTo('/chat')"
-        :active="false"
-      >
-        <IconChat />
-
-        <span class="gnb-span">채팅하기</span>
-      </v-btn>
-      <v-btn
-        class="no-background-hover"
-        style="width: 20%"
-        @click="navigateTo('/group')"
-        :active="false"
-      >
-        <IconGroup />
-
-        <span class="gnb-span">공동구매</span>
-      </v-btn>
-      <v-btn
-        class="no-background-hover"
-        style="width: 20%"
-        @click="navigateTo('/complain')"
-        :active="false"
-      >
-        <IconComplain />
-
-        <span class="gnb-span">민원신청</span>
-      </v-btn>
-    </v-bottom-navigation>
   </v-main>
 </template>
 
@@ -191,7 +139,7 @@ const windowNumber = ref(0);
 definePageMeta({
   title: "Home",
   description: "Home page",
-  // layout: "home",
+  layout: "home",
 });
 </script>
 

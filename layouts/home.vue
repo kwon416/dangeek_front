@@ -1,5 +1,5 @@
 <template>
-  <v-layout>
+  <v-app>
     <slot />
     <v-bottom-navigation horizontal>
       <v-btn
@@ -73,7 +73,7 @@
         <span :class="complainActive ? 'active' : ''">민원신청</span>
       </v-btn>
     </v-bottom-navigation>
-  </v-layout>
+  </v-app>
 </template>
 
 <script setup>

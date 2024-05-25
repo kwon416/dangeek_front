@@ -86,58 +86,6 @@
       </v-card>
     </v-container>
   </v-main>
-  <v-bottom-navigation horizontal>
-    <v-btn
-      class="no-background-hover"
-      style="width: 20%"
-      @click="navigateTo('/')"
-      :active="false"
-    >
-      <IconHome />
-
-      <span class="gnb-span">홈</span>
-    </v-btn>
-    <v-btn
-      class="no-background-hover"
-      style="width: 20%"
-      @click="navigateTo('/roommate')"
-      :active="false"
-    >
-      <IconRoommateActive />
-
-      <span class="gnb-span" style="color: #79a1e6">룸메이트</span>
-    </v-btn>
-    <v-btn
-      class="no-background-hover"
-      style="width: 20%"
-      @click="navigateTo('/chat')"
-      :active="false"
-    >
-      <IconChat />
-
-      <span class="gnb-span">채팅하기</span>
-    </v-btn>
-    <v-btn
-      class="no-background-hover"
-      style="width: 20%"
-      @click="navigateTo('/group')"
-      :active="false"
-    >
-      <IconGroup />
-
-      <span class="gnb-span">공동구매</span>
-    </v-btn>
-    <v-btn
-      class="no-background-hover"
-      style="width: 20%"
-      @click="navigateTo('/complain')"
-      :active="false"
-    >
-      <IconComplain />
-
-      <span class="gnb-span">민원신청</span>
-    </v-btn>
-  </v-bottom-navigation>
 </template>
 
 <script setup>
@@ -145,7 +93,7 @@ const router = useRouter();
 definePageMeta({
   title: "Roommate",
   description: "Roommate page",
-  // layout: "home", //레이아웃 문제로 주석처리
+  layout: "home", //레이아웃 문제로 주석처리
 });
 </script>
 
