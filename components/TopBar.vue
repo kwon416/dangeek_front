@@ -8,7 +8,7 @@
       <v-btn icon @click="router.back()">
         <IconBackBtn />
       </v-btn>
-      <v-app-bar-title class="text-center mx-0">
+      <v-app-bar-title class="text-center mx-0 title-t16-bold">
         {{ title }}
       </v-app-bar-title>
       <template v-slot:extension v-if="tabList">

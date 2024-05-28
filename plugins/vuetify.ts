@@ -81,6 +81,13 @@ export default defineNuxtPlugin((app) => {
         border: "15",
         elevation: "0",
       },
+      VSelect: {
+        color: "#79A1E6",
+        variant: "outlined",
+        baseColor: "#79A1E6",
+        density: "comfortable",
+        itemColor: "#79A1E6",
+      },
     },
     theme: {
       defaultTheme: "dangeek",

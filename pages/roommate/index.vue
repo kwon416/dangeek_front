@@ -86,6 +86,25 @@
       </v-card>
     </v-container>
   </v-main>
+  <v-btn
+    variant="flat"
+    color="white"
+    rounded="30"
+    height="39"
+    to="/roommate/write"
+    style="
+      position: fixed;
+      bottom: 80px;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 1.5px solid #2a5fc5;
+    "
+  >
+    <template v-slot:prepend>
+      <v-icon icon="mdi-pencil" color="#79A1E6" size="15"></v-icon>
+    </template>
+    <p class="title-t14-medium" style="color: #595959">글 쓰기</p>
+  </v-btn>
 </template>
 
 <script setup>
