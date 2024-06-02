@@ -80,6 +80,7 @@
           block
           :height="41"
           rounded="15"
+          @click="router.push('/roommate/detail')"
         >
           자세히 보기
         </v-btn>
@@ -112,7 +113,7 @@ const router = useRouter();
 definePageMeta({
   title: "Roommate",
   description: "Roommate page",
-  layout: "home", //레이아웃 문제로 주석처리
+  layout: "home",
 });
 </script>
 

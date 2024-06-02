@@ -31,9 +31,10 @@
         </div>
       </div>
       <CustomTextArea label="내용을 입력하세요" />
+      <v-spacer />
+      <v-btn height="53" class="v-btn__gradient mx-6 mb-3"> 등록하기 </v-btn>
     </v-container>
   </v-main>
-  <v-btn height="53" class="v-btn__gradient mx-6 mb-3"> 등록하기 </v-btn>
 </template>
 
 <script setup></script>
