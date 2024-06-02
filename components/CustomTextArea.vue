@@ -1,14 +1,13 @@
 <template>
-  <v-text-field
+  <v-textarea
     bg-color="#F2F4F6"
     :label="label"
     rounded="10"
     base-color="#F2F4F6"
-    density="compact"
     type="text"
     v-model="model"
   >
-  </v-text-field>
+  </v-textarea>
 </template>
 
 <script setup>

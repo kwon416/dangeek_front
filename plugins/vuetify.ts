@@ -55,6 +55,9 @@ export default defineNuxtPlugin((app) => {
       },
       VTextarea: {
         baseColor: "rgb(0 0 0 / 20%)",
+        color: "#79A1E6",
+        rounded: "10",
+        variant: "outlined",
       },
       VIcon: {},
       VImg: {
