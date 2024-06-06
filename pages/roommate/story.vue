@@ -139,9 +139,44 @@
       <div style="height: 93px"></div>
     </v-container>
     <div class="pb-10 bottom-btn-wrapper">
-      <v-btn block class="v-btn__gradient" rounded="15" height="53">
-        <p class="title-t18-bold">채팅 신청하기</p>
-      </v-btn>
+      <v-dialog>
+        <template v-slot:activator="{ props: activatorProps }">
+          <v-btn
+            v-bind="activatorProps"
+            block
+            class="v-btn__gradient"
+            rounded="15"
+            height="53"
+          >
+            <p class="title-t18-bold">채팅 신청하기</p>
+          </v-btn>
+        </template>
+        <template v-slot:default="{ isActive }">
+          <v-card
+            class="pa-4 mx-auto"
+            style="width: 335px; align-items: center"
+            rounded="15"
+          >
+            <IconCheck width="33" height="33" />
+            <p class="title-t17-bold mt-4 mb-1" style="color: #939393">
+              <span class="title-t17-bold" style="color: #121212">name님</span
+              >에게
+            </p>
+            <p class="title-t17-bold mb-4" style="color: #939393">
+              채팅을 신청했습니다.
+            </p>
+            <v-btn
+              class="v-btn__gradient w-100"
+              text="확인"
+              rounded="15"
+              @click="
+                isActive.value = false;
+                router.back();
+              "
+            ></v-btn>
+          </v-card>
+        </template>
+      </v-dialog>
     </div>
   </v-main>
 </template>
