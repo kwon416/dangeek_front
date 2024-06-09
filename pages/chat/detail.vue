@@ -2,7 +2,7 @@
   <v-main>
     <v-app-bar class="px-3" extension-height="102">
       <v-btn icon @click="router.back()">
-        <IconBackBtn />
+        <IconBackBtn style="margin-left: -16px" />
       </v-btn>
       <IconAvatar1 :width="32" :height="32" />
       <p class="title-t16-bold ps-2">name</p>

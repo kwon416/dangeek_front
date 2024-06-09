@@ -40,7 +40,37 @@
       </div>
     </v-container>
     <v-divider thickness="7" color="#F2F4F6" />
-    <v-container></v-container>
+    <v-container>
+      <p class="title-t18-bold pt-5 pb-4" style="color: #2a5fc5">
+        작성자의 생활 습관 및 성향
+      </p>
+      <div style="gap: 14px 17px; display: flex; flex-wrap: wrap">
+        <CustomChip text="몰13213123루" />
+        <CustomChip text="몰13213123루" />
+        <CustomChip text="몰13213123루" />
+        <CustomChip text="몰13213123루" />
+        <CustomChip text="몰13213123루" />
+
+        <CustomChip text="몰루" />
+        <CustomChip text="몰루" />
+        <CustomChip text="몰루" />
+      </div>
+      <p class="title-t18-bold pt-10 pb-4" style="color: #2a5fc5">
+        작성자의 취미 및 관심사
+      </p>
+      <div style="gap: 14px 17px; display: flex; flex-wrap: wrap">
+        <CustomChip text="몰13213123루" />
+        <CustomChip text="몰루" />
+        <CustomChip text="몰루" />
+        <CustomChip text="몰루" />
+      </div>
+      <div style="height: 93px"></div>
+    </v-container>
+    <div class="pb-10 bottom-btn-wrapper">
+      <v-btn block class="v-btn__gradient" rounded="15" height="53">
+        <p class="title-t18-bold">채팅 신청하기</p>
+      </v-btn>
+    </div>
   </v-main>
 </template>
 
@@ -55,5 +85,14 @@
   top: 50%;
   left: 50%;
   transform: translate(-55%, -80%);
+}
+.bottom-btn-wrapper {
+  width: 100%;
+  padding: 0 24px;
+  background-color: #fff;
+  position: fixed;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
 }
 </style>
