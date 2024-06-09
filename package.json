@@ -15,6 +15,7 @@
     "@mdi/font": "^7.4.47",
     "@nuxt/ui": "^2.15.2",
     "nuxt": "^3.11.2",
+    "nuxt-socket-io": "^3.0.13",
     "sass-loader": "^14.2.1",
     "vue": "^3.4.21",
     "vue-router": "^4.3.0"

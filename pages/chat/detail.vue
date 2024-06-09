@@ -93,6 +93,8 @@ const messages = ref([
 
 const newMessage = ref("");
 
+onMounted(() => {});
+
 const sendMessage = () => {
   if (newMessage.value.trim()) {
     messages.value.push({ text: newMessage.value, type: "sent" });

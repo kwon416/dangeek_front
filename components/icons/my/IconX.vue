@@ -1,0 +1,30 @@
+<template>
+  <svg
+    width="20"
+    height="20"
+    viewBox="0 0 20 20"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <g id="Group 36894">
+      <path
+        id="Line 50"
+        d="M1 1L19 19"
+        stroke="#FF4841"
+        stroke-width="2"
+        stroke-linecap="round"
+      />
+      <path
+        id="Line 51"
+        d="M19 1L1 19"
+        stroke="#FF4841"
+        stroke-width="2"
+        stroke-linecap="round"
+      />
+    </g>
+  </svg>
+</template>
+
+<script setup></script>
+
+<style lang="scss" scoped></style>

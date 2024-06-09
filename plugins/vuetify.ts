@@ -80,6 +80,18 @@ export default defineNuxtPlugin((app) => {
         hover: false,
         elevation: 0,
       },
+      VRadioGroup: {
+        falseIcon: "custom:IconCheckOff",
+        trueIcon: "custom:IconCheck",
+      },
+      VRadio: {
+        falseIcon: "custom:IconCheckOff",
+        trueIcon: "custom:IconCheck",
+        ripple: false,
+        active: false,
+        hover: false,
+        elevation: 0,
+      },
       VCard: {
         border: "15",
         elevation: "0",

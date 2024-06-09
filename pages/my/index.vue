@@ -12,7 +12,11 @@
         <p class="title-t16-medium" style="color: #939393">email</p>
       </div>
       <div class="center">
-        <v-btn color="#F2F4F6" style="margin: 20px auto">
+        <v-btn
+          color="#F2F4F6"
+          style="margin: 20px auto"
+          @click="router.push('/my/introduce')"
+        >
           <p class="title-t14-medium" style="color: #595959">
             자기소개 작성 및 수정
           </p>
@@ -65,7 +69,9 @@
   </v-main>
 </template>
 
-<script setup></script>
+<script setup>
+const router = useRouter();
+</script>
 
 <style lang="scss" scoped>
 .center {
