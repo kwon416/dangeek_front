@@ -60,6 +60,14 @@
 
 /* text-style */
 
+.title-t27-bold {
+  font-family: Pretendard;
+  font-size: 27px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 33px; /* 122.222% */
+}
+
 .title-t26-bold {
   font-family: Pretendard;
   font-size: 26px !important;
@@ -152,7 +160,7 @@
   font-family: Pretendard;
   font-size: 14px !important;
   font-style: normal;
-  font-weight: 700 !important;
+  font-weight: 600 !important;
   line-height: normal;
 }
 
