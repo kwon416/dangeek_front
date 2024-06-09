@@ -90,6 +90,7 @@ const messages = ref([
   { text: "Hello!", type: "received" },
   { text: "Hi there!", type: "sent" },
 ]);
+const socket = useNuxtApp().socket;
 
 const newMessage = ref("");
 

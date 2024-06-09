@@ -5,24 +5,7 @@
         <span style="color: #3867e7">{{ question }}</span> {{ text }}
       </p>
       <v-radio-group class="pb-0" v-model="model" column>
-        <div class="radio-wrapper">
-          <IconO class="me-4" />
-          <p>맞아요</p>
-          <v-radio
-            :value="true"
-            class="mr-4"
-            style="position: absolute; right: 17px"
-          ></v-radio>
-        </div>
-        <div class="radio-wrapper mt-2">
-          <IconX class="me-4" />
-          <p>아니에요</p>
-          <v-radio
-            :value="false"
-            class="mr-4"
-            style="position: absolute; right: 17px"
-          ></v-radio>
-        </div>
+        <CustomTextInput label="1~24 사이의 숫자를 입력해주세요" />
       </v-radio-group>
     </v-card-text>
   </v-card>

@@ -5,7 +5,7 @@
     rounded="10"
     base-color="#F2F4F6"
     density="compact"
-    type="text"
+    :type="type"
     v-model="model"
   >
   </v-text-field>
@@ -17,6 +17,10 @@ const props = defineProps({
   label: {
     type: String,
     default: "입력하세요",
+  },
+  type: {
+    type: String,
+    default: "text",
   },
 });
 </script>

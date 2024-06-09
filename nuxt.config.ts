@@ -1,12 +1,6 @@
 import vuetify, { transformAssetUrls } from "vite-plugin-vuetify";
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  nitro: {
-    firebase: {
-      gen: 2,
-    },
-  },
-  ssr: false,
   app: {
     head: {
       title: "DanGeek",
@@ -20,9 +14,33 @@ export default defineNuxtConfig({
       // script: [{ type: "text/javascript", src: "/js/appCtr.js" }],
     },
   },
-  devtools: { enabled: true },
   build: {
     transpile: ["vuetify"],
+  },
+  colorMode: {
+    preference: "light", // default value of $colorMode.preference
+    fallback: "light", // fallback value if not system preference found
+    hid: "nuxt-color-mode-script",
+    globalName: "__NUXT_COLOR_MODE__",
+    componentName: "ColorScheme",
+    classPrefix: "",
+    classSuffix: "-mode",
+    storageKey: "nuxt-color-mode",
+  },
+  components: [{ path: "~/components", pathPrefix: false }],
+  css: [
+    "vuetify/lib/styles/main.sass",
+    "@/assets/fonts/main.css",
+    "~/assets/css/style.css",
+  ],
+  devtools: { enabled: true },
+  io: {
+    sockets: [
+      {
+        name: "main",
+        url: "http://localhost:3000",
+      },
+    ],
   },
   modules: [
     "@nuxt/ui",
@@ -42,19 +60,21 @@ export default defineNuxtConfig({
       });
     },
   ],
-  io: {
-    sockets: [
-      {
-        name: "main",
-        url: "http://localhost:3000",
-      },
-    ],
+  nitro: {
+    firebase: {
+      gen: 2,
+    },
+  },
+  plugins: [{ src: "~/plugins/socket.client.js", mode: "client" }],
+  ssr: false,
+  sourcemap: {
+    server: false,
+    client: false,
   },
   ui: {
     global: true,
     icons: ["mdi", "simple-icons"],
   },
-
   vite: {
     vue: {
       template: {
@@ -64,25 +84,5 @@ export default defineNuxtConfig({
     define: {
       "process.env.DEBUG": false,
     },
-  },
-  colorMode: {
-    preference: "light", // default value of $colorMode.preference
-    fallback: "light", // fallback value if not system preference found
-    hid: "nuxt-color-mode-script",
-    globalName: "__NUXT_COLOR_MODE__",
-    componentName: "ColorScheme",
-    classPrefix: "",
-    classSuffix: "-mode",
-    storageKey: "nuxt-color-mode",
-  },
-  components: [{ path: "~/components", pathPrefix: false }],
-  css: [
-    "vuetify/lib/styles/main.sass",
-    "@/assets/fonts/main.css",
-    "~/assets/css/style.css",
-  ],
-  sourcemap: {
-    server: false,
-    client: false,
   },
 });
