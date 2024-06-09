@@ -77,16 +77,14 @@
               생활 습관 및 성향
             </p>
           </div>
-          <div class="d-flex pt-1" style="justify-content: start">
-            <p
-              class="title-t18-bold"
-              style="line-height: 15px; padding-bottom: 6px"
-            >
-              <span
-                >흡연자이며 외항형입니다. 잠버릇이 있어 같이 사는 룸메이트가
-                예민하지 않은 사람이었으면 좋겠습니다.</span
-              >
-            </p>
+          <div
+            class="d-flex pt-1"
+            style="flex-wrap: wrap; justify-content: center; gap: 14px 17px"
+          >
+            <CustomChip text="bla bla" />
+            <CustomChip text="bla bla" />
+            <CustomChip text="bla bla" />
+            <CustomChip text="bla bla" />
           </div>
         </div>
       </v-card>
@@ -101,41 +99,18 @@
               취미 및 관심사
             </p>
           </div>
-          <div class="d-flex pt-1" style="justify-content: start">
-            <p
-              class="title-t18-bold"
-              style="line-height: 15px; padding-bottom: 6px"
-            >
-              <span
-                >EPL 경기 관람하는 것을 좋아하고 직접 축구하는 것도 좋아합니다.
-              </span>
-            </p>
+          <div
+            class="d-flex pt-1"
+            style="flex-wrap: wrap; justify-content: center; gap: 14px 17px"
+          >
+            <CustomChip text="bla bla" />
+            <CustomChip text="bla bla" />
+            <CustomChip text="bla bla" />
+            <CustomChip text="bla bla" />
           </div>
         </div>
       </v-card>
-      <v-card
-        class="px-10 mb-4 py-5 mx-auto"
-        rounded="20"
-        style="justify-content: center; display: flex"
-      >
-        <div style="display: block; width: fit-content">
-          <div class="d-flex" style="justify-content: center">
-            <p class="title" style="line-height: 15px; padding-bottom: 6px">
-              기대하는 룸메이트 상
-            </p>
-          </div>
-          <div class="d-flex pt-1" style="justify-content: start">
-            <p
-              class="title-t18-bold"
-              style="line-height: 15px; padding-bottom: 6px"
-            >
-              <span
-                >EPL 경기 관람하는 것을 좋아하고 직접 축구하는 것도 좋아합니다.
-              </span>
-            </p>
-          </div>
-        </div>
-      </v-card>
+
       <div style="height: 93px"></div>
     </v-container>
     <div class="pb-10 bottom-btn-wrapper">
