@@ -30,7 +30,7 @@
           <v-form @submit.prevent="submit" v-model="valid">
             <v-text-field
               hide-details="auto"
-              v-model="email"
+              v-model="username"
               :rules="[rules.emailRequired, rules.email]"
               style="margin-bottom: 34px"
               label="example@dankook.ac.kr"
@@ -292,7 +292,7 @@
                 지금 바로 DanGeek을 이용해보세요
               </p>
               <v-btn
-                @click="router.push('/')"
+                @click="clickComplete()"
                 rounded="15"
                 class="w-100 v-btn__gradient"
                 style="height: 41px"
@@ -309,9 +309,10 @@
 
 <script setup>
 const router = useRouter();
+const auth = useAuthStore();
 const loading = ref(false);
 const valid = ref(false);
-const userName = ref("");
+const username = ref("");
 const email = ref("");
 const password = ref("");
 const passwordConfirm = ref("");
@@ -349,13 +350,13 @@ const rules = {
 
 const windowNumber = ref(0);
 
-const checkApi = (userName) => {
+const checkApi = (username) => {
   return new Promise((resolve) => {
     clearTimeout(timeout.value);
 
     timeout.value = setTimeout(() => {
-      if (!userName) return resolve("사용자 이름을 입력해주세요.");
-      if (userName === "johnleider")
+      if (!username) return resolve("사용자 이름을 입력해주세요.");
+      if (username === "johnleider")
         return resolve(
           "사용자 이름이 이미 사용 중입니다. 다른 이름을 시도해주세요."
         );
@@ -401,9 +402,18 @@ function pressBack() {
   }
 }
 
-function completeClick() {
-  isCompleteDialogOpend.value = true;
-  // router.push("/");
+// 마지막 완료 버튼 클릭
+async function completeClick() {
+  const response = await auth.signup(
+    username.value,
+    password.value,
+    nickname.value
+  );
+  if (response) {
+    isCompleteDialogOpend.value = true;
+  } else {
+    alert("회원가입에 실패했습니다.");
+  }
 }
 
 function resendEmail() {
@@ -412,6 +422,12 @@ function resendEmail() {
   setTimeout(() => {
     isResendDialogOpend.value = false;
   }, 3000);
+}
+
+// 회원가입 완료 메인으로 이동
+async function clickComplete() {
+  isCompleteDialogOpend.value = false;
+  router.push("/");
 }
 </script>
 
