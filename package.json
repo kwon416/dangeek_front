@@ -14,8 +14,10 @@
     "@iconify-json/simple-icons": "^1.1.99",
     "@mdi/font": "^7.4.47",
     "@nuxt/ui": "^2.15.2",
+    "@pinia/nuxt": "^0.5.1",
     "nuxt": "^3.11.2",
     "nuxt-socket-io": "^3.0.13",
+    "pinia": "^2.1.7",
     "sass-loader": "^14.2.1",
     "vue": "^3.4.21",
     "vue-router": "^4.3.0"
@@ -23,6 +25,7 @@
   "devDependencies": {
     "@nuxtjs/color-mode": "^3.4.0",
     "@nuxtjs/vuetify": "^1.12.3",
+    "@pinia-plugin-persistedstate/nuxt": "^1.2.0",
     "autoprefixer": "^10.4.19",
     "postcss": "^8.4.38",
     "sass": "^1.75.0",

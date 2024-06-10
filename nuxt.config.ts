@@ -45,6 +45,7 @@ export default defineNuxtConfig({
   modules: [
     "@nuxt/ui",
     "nuxt-socket-io",
+    "@pinia/nuxt",
     "@nuxtjs/color-mode",
     (_options, nuxt) => {
       nuxt.hooks.hook("vite:extendConfig", (config) => {
@@ -66,6 +67,11 @@ export default defineNuxtConfig({
     },
   },
   plugins: [{ src: "~/plugins/socket.client.js", mode: "client" }],
+  runtimeConfig: {
+    public: {
+      API_BASE_URL: process.env.API_BASE_URL || "",
+    },
+  },
   ssr: false,
   sourcemap: {
     server: false,
