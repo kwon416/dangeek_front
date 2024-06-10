@@ -14,7 +14,7 @@
         <v-form @submit.prevent="submit" v-model="form">
           <v-text-field
             hide-details="auto"
-            v-model="userName"
+            v-model="username"
             :rules="[rules.emailRequired]"
             style="margin-bottom: 21px"
             label="이메일을 입력해주세요"
@@ -63,10 +63,11 @@
 </template>
 
 <script setup>
+const auth = useAuthStore();
 const router = useRouter();
 const loading = ref(false);
 const form = ref(false);
-const userName = ref("");
+const username = ref("");
 const password = ref("");
 const timeout = ref(null);
 
@@ -75,13 +76,13 @@ const rules = {
   passwordRequired: (value) => !!value || "패스워드를 입력해주세요",
 };
 
-const checkApi = (userName) => {
+const checkApi = (username) => {
   return new Promise((resolve) => {
     clearTimeout(timeout.value);
 
     timeout.value = setTimeout(() => {
-      if (!userName) return resolve("사용자 이름을 입력해주세요.");
-      if (userName === "johnleider")
+      if (!username) return resolve("사용자 이름을 입력해주세요.");
+      if (username === "johnleider")
         return resolve(
           "사용자 이름이 이미 사용 중입니다. 다른 이름을 시도해주세요."
         );
@@ -94,8 +95,11 @@ const checkApi = (userName) => {
 const submit = async (event) => {
   loading.value = true;
 
-  const results = await event;
-
+  const results = await auth.login(username.value, password.value);
+  if (!results) {
+    loading.value = false;
+    return;
+  }
   loading.value = false;
 
   // alert(JSON.stringify(results, null, 2));

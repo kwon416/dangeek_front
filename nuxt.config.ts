@@ -46,6 +46,7 @@ export default defineNuxtConfig({
     "@nuxt/ui",
     "nuxt-socket-io",
     "@pinia/nuxt",
+    "@pinia-plugin-persistedstate/nuxt",
     "@nuxtjs/color-mode",
     (_options, nuxt) => {
       nuxt.hooks.hook("vite:extendConfig", (config) => {

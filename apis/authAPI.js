@@ -19,6 +19,18 @@ const authAPI = {
       return null;
     }
   },
+  async login(username, password) {
+    try {
+      const body = {
+        username: username,
+        password: password,
+      };
+      return HTTP_REQUEST.POST(`${baseUrl}/auth/login`, body);
+    } catch (error) {
+      console.error(error);
+      return null;
+    }
+  },
 };
 
 export default authAPI;

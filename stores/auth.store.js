@@ -28,9 +28,28 @@ export const useAuthStore = defineStore(
         return false;
       }
     }
+
+    async function login(username, password) {
+      console.log("login start");
+      const response = await authAPI.login(username, password);
+
+      console.log(response);
+      // Error handling
+      if (response) {
+        console.log("login success");
+        userInfo.value.accessToken = response.accessToken;
+        userInfo.value.refreshToken = response.refreshToken;
+        return true;
+      } else {
+        console.log("login failed");
+        return false;
+      }
+    }
+
     return {
       userInfo,
       signup,
+      login,
     };
   },
   { persist: true }
