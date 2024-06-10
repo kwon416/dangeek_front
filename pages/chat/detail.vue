@@ -143,7 +143,7 @@ const scrollToBottom = () => {
 .messages {
   flex: 2;
   overflow-y: auto;
-  background-color: #f9f9f9;
+  background-color: #fff;
 }
 
 .message {
@@ -153,6 +153,7 @@ const scrollToBottom = () => {
   border-radius: 10px;
   max-width: 80%;
   word-wrap: break-word;
+  position: relative;
 }
 .message-wrapper.sent {
   align-self: end;
@@ -192,6 +193,23 @@ const scrollToBottom = () => {
   font-style: normal;
   font-weight: 500;
   line-height: 20px; /* 153.846% */
+}
+.message.sent::after,
+.message.received::after {
+  content: "";
+  position: absolute;
+  border-width: 10px;
+  border-style: solid;
+}
+
+.message.sent::after {
+  border-color: transparent #3867e7 transparent transparent;
+  right: 0px;
+}
+
+.message.received::after {
+  border-color: transparent transparent transparent #e9eaec;
+  left: 0px;
 }
 
 .input-area {
