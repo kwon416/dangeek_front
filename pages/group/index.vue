@@ -33,7 +33,12 @@
     <v-window v-model="selection" style="background-color: #f2f4f6">
       <v-window-item :value="sizes[0]">
         <v-container>
-          <v-card v-for="i in 7" class="pa-6 mb-2" rounded="15">
+          <v-card
+            v-for="i in 7"
+            class="pa-6 mb-2"
+            rounded="15"
+            @click="router.push('/group/detail')"
+          >
             <div class="d-flex" style="justify-content: start">
               <img
                 src="https://picsum.photos/200/300"
@@ -67,7 +72,12 @@
       </v-window-item>
       <v-window-item :value="sizes[1]">
         <v-container>
-          <v-card v-for="i in 7" class="pa-6 mb-2" rounded="15">
+          <v-card
+            v-for="i in 7"
+            class="pa-6 mb-2"
+            rounded="15"
+            @click="router.push('/group/detail')"
+          >
             <div class="d-flex" style="justify-content: start">
               <img
                 src="https://picsum.photos/200/300"
@@ -103,7 +113,12 @@
       </v-window-item>
       <v-window-item :value="sizes[2]">
         <v-container>
-          <v-card v-for="i in 7" class="pa-6 mb-2" rounded="15">
+          <v-card
+            v-for="i in 7"
+            class="pa-6 mb-2"
+            rounded="15"
+            @click="router.push('/group/detail')"
+          >
             <div class="d-flex" style="justify-content: start">
               <img
                 src="https://picsum.photos/200/300"
@@ -137,7 +152,12 @@
       </v-window-item>
       <v-window-item :value="sizes[3]">
         <v-container>
-          <v-card v-for="i in 7" class="pa-6 mb-2" rounded="15">
+          <v-card
+            v-for="i in 7"
+            class="pa-6 mb-2"
+            rounded="15"
+            @click="router.push('/group/detail')"
+          >
             <div class="d-flex" style="justify-content: start">
               <img
                 src="https://picsum.photos/200/300"

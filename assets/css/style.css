@@ -85,6 +85,14 @@
   line-height: normal;
 }
 
+.tilte-t24-bold {
+  font-family: Pretendard;
+  font-size: 24px !important;
+  font-style: normal;
+  font-weight: 700 !important;
+  line-height: normal;
+}
+
 .title-t20-regular {
   font-family: Pretendard;
   font-size: 20px !important;
@@ -230,11 +238,10 @@
   line-height: normal;
 }
 .title-t11-regular {
-  color: #000;
   font-family: Pretendard;
-  font-size: 11px;
+  font-size: 11px !important;
   font-style: normal;
-  font-weight: 500;
+  font-weight: 600 !important;
   line-height: 15px;
 }
 

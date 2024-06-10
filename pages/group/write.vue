@@ -47,6 +47,8 @@
         <CustomTextInput label="" />
       </div>
       <CustomTextArea label="내용을 입력하세요" />
+      <input type="file" @change="onFileChange" accept="image/*" />
+      <img v-if="imageUrl" :src="imageUrl" alt="Uploaded Image" />
       <div style="height: 93px"></div>
     </v-container>
     <div class="pb-10 bottom-btn-wrapper">
