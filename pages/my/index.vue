@@ -5,11 +5,13 @@
       <IconAvatar1 :width="88" :height="88" style="margin: 0 auto" />
       <div class="center">
         <div style="width: 15px"></div>
-        <span class="title-t20-bold mx-2">name</span>
+        <span class="title-t20-bold mx-2">{{ auth.userInfo.nickname }}</span>
         <v-icon icon="mdi-pencil" color="#939393" size="15"></v-icon>
       </div>
       <div class="center">
-        <p class="title-t16-medium" style="color: #939393">email</p>
+        <p class="title-t16-medium" style="color: #939393">
+          {{ auth.userInfo.username }}
+        </p>
       </div>
       <div class="center">
         <v-btn
@@ -33,7 +35,7 @@
           <IconDocument class="me-4" />
         </template>
         <template v-slot:append>
-          <p>미완료</p>
+          <p>{{ auth.userInfo.introductionWritten ? "작성" : "미작성" }}</p>
         </template>
       </v-list-item>
       <v-divider
@@ -54,8 +56,8 @@
           <IconMainRoommateActive class="me-4" />
         </template>
         <template v-slot:append>
-          <label class="form-switch">
-            <input type="checkbox" />
+          <label class="form-switch" for="checkbox">
+            <input type="checkbox" id="checkbox" v-model="isChecked" />
             <i class="me-0"></i>
           </label>
         </template>
@@ -71,6 +73,13 @@
 
 <script setup>
 const router = useRouter();
+const auth = useAuthStore();
+const isChecked = ref(false);
+
+onMounted(async () => {
+  await auth.myPage();
+  isChecked.value = auth.userInfo.putOnRecommend;
+});
 </script>
 
 <style lang="scss" scoped>

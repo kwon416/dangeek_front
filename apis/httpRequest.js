@@ -2,7 +2,7 @@ const HTTP_REQUEST = {
   GET(uri, headers) {
     return $fetch(uri, {
       method: "GET",
-      // headers: headers,
+      headers: headers ? headers : {},
     });
   },
 
