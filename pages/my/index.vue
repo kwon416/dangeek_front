@@ -67,6 +67,7 @@
         color="#E8E8E8"
         thickness="2"
       />
+      <p @click="logout()">로그아웃</p>
     </v-list>
   </v-main>
 </template>
@@ -85,6 +86,10 @@ watch(isChecked, async (value) => {
   console.log(value);
   await auth.putOnRecommend(value);
 });
+function logout() {
+  auth.logout();
+  router.push("/login");
+}
 </script>
 
 <style lang="scss" scoped>

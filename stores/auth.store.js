@@ -88,12 +88,30 @@ export const useAuthStore = defineStore(
       }
     }
 
+    async function logout() {
+      console.log("logout start");
+      // clear userInfo
+      userInfo.value.username = "";
+      userInfo.value.password = "";
+      userInfo.value.nickname = "";
+      userInfo.value.accessToken = "";
+      userInfo.value.refreshToken = "";
+      userInfo.value.introductionWritten = false;
+      userInfo.value.putOnRecommend = false;
+
+      // remove accessToken in localStorage
+      localStorage.removeItem("accessToken");
+
+      console.log("logout success");
+    }
+
     return {
       userInfo,
       signup,
       login,
       myPage,
       putOnRecommend,
+      logout,
     };
   },
   { persist: true }
