@@ -72,11 +72,28 @@ export const useAuthStore = defineStore(
       }
     }
 
+    async function putOnRecommend(value) {
+      console.log("putOnRecommend start");
+      const response = await authAPI.putOnRecommend(value);
+
+      console.log(response);
+      // Error handling
+      if (response) {
+        console.log("putOnRecommend success");
+        userInfo.value.putOnRecommend = response.putOnRecommend;
+        return true;
+      } else {
+        console.log("putOnRecommend failed");
+        return false;
+      }
+    }
+
     return {
       userInfo,
       signup,
       login,
       myPage,
+      putOnRecommend,
     };
   },
   { persist: true }

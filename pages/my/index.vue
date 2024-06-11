@@ -80,6 +80,11 @@ onMounted(async () => {
   await auth.myPage();
   isChecked.value = auth.userInfo.putOnRecommend;
 });
+
+watch(isChecked, async (value) => {
+  console.log(value);
+  await auth.putOnRecommend(value);
+});
 </script>
 
 <style lang="scss" scoped>

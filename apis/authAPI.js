@@ -43,6 +43,19 @@ const authAPI = {
       return null;
     }
   },
+
+  async putOnRecommend(value) {
+    try {
+      const headers = {
+        Authorization: `Bearer ${useAuthStore().userInfo.accessToken}`,
+      };
+      const state = value ? "release" : "hold";
+      return HTTP_REQUEST.GET(`${baseUrl}/member/${state}`, headers);
+    } catch (error) {
+      console.error(error);
+      return null;
+    }
+  },
 };
 
 export default authAPI;
