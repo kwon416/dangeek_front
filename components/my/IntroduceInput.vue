@@ -4,8 +4,11 @@
       <p class="mb-6">
         <span style="color: #3867e7">{{ question }}</span> {{ text }}
       </p>
-      <v-radio-group class="pb-0" v-model="model" column>
-        <CustomTextInput label="1~24 사이의 숫자를 입력해주세요" />
+      <v-radio-group class="pb-0" column>
+        <CustomTextInput
+          v-model="model"
+          label="1~24 사이의 숫자를 입력해주세요"
+        />
       </v-radio-group>
     </v-card-text>
   </v-card>

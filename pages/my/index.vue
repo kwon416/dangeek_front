@@ -47,11 +47,9 @@
         <v-list-item-title class="title-t18-bold">
           룸메 추천 노출 여부
         </v-list-item-title>
-        <v-list-item-subtilte>
-          <p class="title-t11-regular-grey">
-            허용 시 다른 유저의 추천에 노출되게 됩니다.
-          </p>
-        </v-list-item-subtilte>
+        <p class="title-t11-regular-grey">
+          허용 시 다른 유저의 추천에 노출되게 됩니다.
+        </p>
         <template v-slot:prepend>
           <IconMainRoommateActive class="me-4" />
         </template>

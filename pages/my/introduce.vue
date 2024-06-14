@@ -7,64 +7,64 @@
       <IntroduceCheck
         question="Q1"
         text="배달음식을 시키고 바로 남은 쓰레기는 바로 치워야한다."
-        v-model="q1"
+        v-model="values.q1"
       />
       <IntroduceCheck
         question="Q2"
         text="일주일에 한 번 이상 바닥 청소를 한다."
-        v-model="q2"
+        v-model="values.q2"
       />
       <IntroduceCheck
         question="Q3"
         text="한 달에 한 번 이상 화장실 청소를 한다"
-        v-model="q3"
+        v-model="values.q3"
       />
       <IntroduceCheck
         question="Q4"
         text="나의 책상 위에는 쓰레기가 있으면 안된다."
-        v-model="q4"
+        v-model="values.q4"
       />
       <IntroduceCheck
         question="Q5"
         text="음식을 요리한 뒤에는 바로 설거지를 해야 한다."
-        v-model="q5"
+        v-model="values.q5"
       />
       <IntroduceCheck
         question="Q6"
         text="배달음식을 시키고 남은 쓰레기는 하루 이틀 내에 치운다."
-        v-model="q6"
+        v-model="values.q6"
       />
       <IntroduceCheck
         question="Q7"
         text="한 달에 한 번 이상 바닥 청소를 한다."
-        v-model="q7"
+        v-model="values.q7"
       />
       <IntroduceCheck
         question="Q8"
         text="세 달에 한 번 이상 화장실 청소를 한다"
-        v-model="q8"
+        v-model="values.q8"
       />
       <IntroduceCheck
         question="Q9"
         text="내 책상은 깨끗한 편이라고 생각한다."
-        v-model="q9"
+        v-model="values.q9"
       />
       <IntroduceCheck
         question="Q10"
         text="음식을 요리하고 하루 이틀 내에 설거지를 한다."
-        v-model="q10"
+        v-model="values.q10"
       />
       <IntroduceInput
         question="Q11"
         text="나의 평균 취침시간은?"
         type="number"
-        v-model="q11"
+        v-model="values.q11"
       />
       <IntroduceInput
         question="Q12"
-        text="나의 평균 수면시간은?"
+        text="나의 평균 기상시간은?"
         type="number"
-        v-model="q12"
+        v-model="values.q12"
       />
       <v-card class="px-2 pt-2 mb-5" rounded="15">
         <v-card-text class="pb-0">
@@ -76,6 +76,7 @@
             rounded="15"
             density="compact"
             color="#79A1E6"
+            multiple
             :items="[
               '게임',
               '스포츠',
@@ -90,6 +91,7 @@
               '요리',
               '사진',
             ]"
+            v-model="values.q13"
           >
             <template v-slot:label>
               <span>선택해주세요</span>
@@ -103,12 +105,11 @@
   </v-main>
   <div class="pb-10 pt-10 bottom-btn-wrapper">
     <v-btn
-      v-bind="activatorProps"
       block
       class="v-btn__gradient"
       rounded="15"
       height="53"
-      @click="router.back()"
+      @click="clickSummit()"
     >
       <p class="title-t18-bold">저장하기</p>
     </v-btn>
@@ -117,19 +118,47 @@
 
 <script setup>
 const router = useRouter();
-const q1 = ref(null);
-const q2 = ref(null);
-const q3 = ref(null);
-const q4 = ref(null);
-const q5 = ref(null);
-const q6 = ref(null);
-const q7 = ref(null);
-const q8 = ref(null);
-const q9 = ref(null);
-const q10 = ref(null);
-const q11 = ref(null);
-const q12 = ref(null);
-const q13 = ref(null);
+const values = ref({
+  q1: null,
+  q2: null,
+  q3: null,
+  q4: null,
+  q5: null,
+  q6: null,
+  q7: null,
+  q8: null,
+  q9: null,
+  q10: null,
+  q11: null,
+  q12: null,
+  q13: null,
+});
+
+const auth = useAuthStore();
+
+onBeforeMount(() => {
+  console.log("mounted");
+});
+
+async function clickSummit() {
+  console.log(values.value.q1);
+  console.log(values.value.q2);
+  console.log(values.value.q3);
+  console.log(values.value.q4);
+  console.log(values.value.q5);
+  console.log(values.value.q6);
+  console.log(values.value.q7);
+  console.log(values.value.q8);
+  console.log(values.value.q9);
+  console.log(values.value.q10);
+  console.log(values.value.q11);
+  console.log(values.value.q12);
+  console.log(values.value.q13);
+  const response = await auth.writeServey(values.value);
+  if (response) {
+    router.back();
+  }
+}
 </script>
 
 <style lang="scss" scoped>

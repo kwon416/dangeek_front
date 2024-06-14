@@ -105,6 +105,36 @@ export const useAuthStore = defineStore(
       console.log("logout success");
     }
 
+    async function getMyIntroduction() {
+      console.log("getMyIntroduction start");
+      const response = await authAPI.getMyIntroduction();
+
+      console.log(response);
+      // Error handling
+      if (response) {
+        console.log("getMyIntroduction success");
+        return response.introduction;
+      } else {
+        console.log("getMyIntroduction failed");
+        return false;
+      }
+    }
+
+    async function writeServey(data) {
+      console.log("writeServey start");
+      const response = await authAPI.writeServey(data);
+
+      console.log(response);
+      // Error handling
+      if (response) {
+        console.log("writeServey success");
+        return true;
+      } else {
+        console.log("writeServey failed");
+        return false;
+      }
+    }
+
     return {
       userInfo,
       signup,
@@ -112,6 +142,8 @@ export const useAuthStore = defineStore(
       myPage,
       putOnRecommend,
       logout,
+      getMyIntroduction,
+      writeServey,
     };
   },
   { persist: true }

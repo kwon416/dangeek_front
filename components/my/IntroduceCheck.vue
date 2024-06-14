@@ -9,7 +9,7 @@
           <IconO class="me-4" />
           <p>맞아요</p>
           <v-radio
-            :value="true"
+            :value="'1'"
             class="mr-4"
             style="position: absolute; right: 17px"
           ></v-radio>
@@ -18,7 +18,7 @@
           <IconX class="me-4" />
           <p>아니에요</p>
           <v-radio
-            :value="false"
+            :value="'0'"
             class="mr-4"
             style="position: absolute; right: 17px"
           ></v-radio>

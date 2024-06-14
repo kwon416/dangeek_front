@@ -10,7 +10,7 @@ const HTTP_REQUEST = {
     return $fetch(uri, {
       method: "POST",
       body: body,
-      headers: { "Content-Type": "application/json" },
+      headers: headers ? headers : { "Content-Type": "application/json" },
     });
   },
 
