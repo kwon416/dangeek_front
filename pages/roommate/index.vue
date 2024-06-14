@@ -46,28 +46,40 @@
     </v-slide-group>
     <div v-else>자기소개 작성하러 가기</div>
     <v-container style="background-color: #f2f4f6">
-      <v-card v-for="i in 4" class="px-6 mb-2" rounded="15">
+      <p v-if="room.roomList.length === 0">글이 없습니다.</p>
+      <v-card
+        v-else
+        v-for="index in room.roomList"
+        class="px-6 mb-2"
+        rounded="15"
+      >
         <div class="d-flex">
           <p class="title-t18-bold pt-5" style="line-height: 15px">
-            4인 여자 룸메 구해요!
+            {{ index.title }}
           </p>
           <v-spacer></v-spacer>
           <div class="main_image">
             <img src="@/assets/icons/roommate/Icon-marker.svg" alt="" />
             <p class="main_image_text title-t11-regular">
-              <span style="color: #2a5fc5">2</span>
+              <span style="color: #2a5fc5">{{
+                index.chatRoomResponse.currentUsers
+              }}</span>
               <span>/</span>
-              <span>4</span>
+              <span>{{ index.chatRoomResponse.maxUser }}</span>
             </p>
           </div>
         </div>
         <div class="d-flex">
           <p class="title-t11-regular-grey" style="color: #585858">
-            11명이 이 글을 보고있어요
+            {{ index.nickname }}
           </p>
           <v-spacer></v-spacer>
           <v-progress-linear
-            :model-value="50"
+            :model-value="
+              (index.chatRoomResponse.currentUsers /
+                index.chatRoomResponse.maxUser) *
+              100
+            "
             bgColor="grey"
             :rounded="true"
             :roundedBar="true"
@@ -109,11 +121,17 @@
 </template>
 
 <script setup>
+const room = useRoomStore();
+
 const router = useRouter();
-definePageMeta({
+const roommates = definePageMeta({
   title: "Roommate",
   description: "Roommate page",
   layout: "home",
+});
+
+onBeforeMount(() => {
+  room.getRoomList();
 });
 </script>
 
