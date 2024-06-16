@@ -100,6 +100,30 @@ const authAPI = {
       return null;
     }
   },
+
+  async saveIntroduce(data) {
+    try {
+      const headers = {
+        Authorization: `Bearer ${useAuthStore().userInfo.accessToken}`,
+      };
+
+      const body = {
+        name: data.name,
+        major: data.major,
+        grade: data.grade,
+        sex: data.sex,
+      };
+
+      return HTTP_REQUEST.POST(
+        `${baseUrl}/member/write/introduction`,
+        body,
+        headers
+      );
+    } catch (error) {
+      console.error(error);
+      return null;
+    }
+  },
 };
 
 export default authAPI;

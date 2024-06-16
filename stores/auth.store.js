@@ -1,6 +1,5 @@
 import { defineStore } from "pinia";
 import authAPI from "~/apis/authAPI";
-import Introduce from "~/pages/my/introduce.vue";
 
 export const useAuthStore = defineStore(
   "auth",
@@ -13,6 +12,13 @@ export const useAuthStore = defineStore(
       refreshToken: "",
       introductionWritten: false,
       putOnRecommend: false,
+    });
+
+    const userIntroduce = ref({
+      name: "",
+      major: "",
+      grade: "",
+      sex: "",
     });
 
     async function signup(username, password, nickname) {
@@ -135,6 +141,25 @@ export const useAuthStore = defineStore(
       }
     }
 
+    async function saveIntroduce(data) {
+      console.log("saveIntroduce start");
+      const response = await authAPI.saveIntroduce(data);
+
+      console.log(response);
+      // Error handling
+      if (response) {
+        console.log("saveIntroduce success");
+        userIntroduce.value.name = response.name;
+        userIntroduce.value.major = response.major;
+        userIntroduce.value.grade = response.grade;
+        userIntroduce.value.sex = response.sex;
+        return true;
+      } else {
+        console.log("saveIntroduce failed");
+        return false;
+      }
+    }
+
     return {
       userInfo,
       signup,
@@ -143,7 +168,8 @@ export const useAuthStore = defineStore(
       putOnRecommend,
       logout,
       getMyIntroduction,
-      writeServey,
+      writeSurvey,
+      saveIntroduce,
     };
   },
   { persist: true }

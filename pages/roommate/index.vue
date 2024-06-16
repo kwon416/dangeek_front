@@ -48,7 +48,10 @@
         </div>
       </v-slide-group-item>
     </v-slide-group>
-    <v-container v-else style="align-items: center">
+    <v-container
+      v-else
+      style="justify-content: center; align-items: center; display: flex"
+    >
       <v-btn color="#F2F4F6" @click="router.push('/my/introduce')">
         <p style="color: #595959">자기소개 작성하러 가기</p>
       </v-btn>

@@ -3,7 +3,7 @@
     <TopBar title="마이페이지" />
     <v-container>
       <IconAvatar1 :width="88" :height="88" style="margin: 0 auto" />
-      <div class="center">
+      <div class="center" @click="router.push('/my/introduce')">
         <div style="width: 15px"></div>
         <span class="title-t20-bold mx-2">{{ auth.userInfo.nickname }}</span>
         <v-icon icon="mdi-pencil" color="#939393" size="15"></v-icon>
@@ -17,10 +17,10 @@
         <v-btn
           color="#F2F4F6"
           style="margin: 20px auto"
-          @click="router.push('/my/introduce')"
+          @click="router.push('/my/survey')"
         >
           <p class="title-t14-medium" style="color: #595959">
-            자기소개 작성 및 수정
+            생활 습관 및 성향 작성
           </p>
         </v-btn>
       </div>
