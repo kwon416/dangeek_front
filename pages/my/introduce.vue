@@ -156,6 +156,7 @@ async function clickSummit() {
   console.log(values.value.q13);
   const response = await auth.writeServey(values.value);
   if (response) {
+    await auth.myPage();
     router.back();
   }
 }

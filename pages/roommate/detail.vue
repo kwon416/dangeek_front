@@ -12,25 +12,31 @@
       </v-card>
       <div class="d-flex">
         <p class="title-t18-bold pt-5" style="line-height: 15px">
-          4인 여자 룸메 구해요!
+          {{ data.title }}
         </p>
         <v-spacer></v-spacer>
         <div class="main_image">
           <img src="@/assets/icons/roommate/Icon-marker.svg" alt="" />
           <p class="main_image_text title-t11-regular">
-            <span style="color: #2a5fc5">2</span>
+            <span style="color: #2a5fc5">{{
+              data.chatRoomResponse.currentUsers
+            }}</span>
             <span>/</span>
-            <span>4</span>
+            <span>{{ data.chatRoomResponse.maxUser }}</span>
           </p>
         </div>
       </div>
       <div class="d-flex">
         <p class="title-t11-regular-grey" style="color: #585858">
-          11명이 이 글을 보고있어요
+          {{ data.nickname }}
         </p>
         <v-spacer></v-spacer>
         <v-progress-linear
-          :model-value="50"
+          :model-value="
+            (data.chatRoomRespponse.currentUsers /
+              data.chatRoomRespponse.maxUser) *
+            100
+          "
           bgColor="grey"
           :rounded="true"
           :roundedBar="true"
@@ -74,7 +80,18 @@
   </v-main>
 </template>
 
-<script setup></script>
+<script setup>
+const route = useRoute();
+const { id } = route.query;
+const room = useRoomStore();
+const data = ref(null);
+
+onBeforeMount(async () => {
+  console.log(id);
+  data.value = await room.getDetail(id);
+  console.log(data.value.title);
+});
+</script>
 
 <style lang="scss" scoped>
 .main_image {

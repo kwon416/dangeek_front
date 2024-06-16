@@ -22,9 +22,26 @@ export const useRoomStore = defineStore(
       }
     }
 
+    async function getDetail(id) {
+      console.log("getDetail start");
+      const response = await roomAPI.getDetail(id);
+
+      console.log(response);
+      // Error handling
+      if (response) {
+        console.log("getDetail success");
+
+        return response;
+      } else {
+        console.log("getDetail failed");
+        return false;
+      }
+    }
+
     return {
       roomList,
       getRoomList,
+      getDetail,
     };
   },
   { persist: true }

@@ -13,8 +13,12 @@
       <IconNotification @click="router.push('/notification')" />
       <IconMy class="ms-5" @click="router.push('/my')" />
     </v-app-bar>
-    <v-slide-group v-if="true" :show-arrows="false" class="mt-9 mb-5">
-      <v-slide-group-item v-for="i in 8">
+    <v-slide-group
+      v-if="auth.userInfo.introductionWritten"
+      :show-arrows="false"
+      class="mt-9 mb-5"
+    >
+      <v-slide-group-item v-for="i in 8" :key="i">
         <!--                    6. 프레젠테이션 프로필 div -->
         <div
           class="presentation_profile"
@@ -44,7 +48,11 @@
         </div>
       </v-slide-group-item>
     </v-slide-group>
-    <div v-else>자기소개 작성하러 가기</div>
+    <v-container v-else style="align-items: center">
+      <v-btn color="#F2F4F6" @click="router.push('/my/introduce')">
+        <p style="color: #595959">자기소개 작성하러 가기</p>
+      </v-btn>
+    </v-container>
     <v-container style="background-color: #f2f4f6">
       <p v-if="room.roomList.length === 0">글이 없습니다.</p>
       <v-card
@@ -52,33 +60,34 @@
         v-for="index in room.roomList"
         class="px-6 mb-2"
         rounded="15"
+        v-bind:key="index.id"
       >
         <div class="d-flex">
           <p class="title-t18-bold pt-5" style="line-height: 15px">
-            {{ index.title }}
+            {{ index.title ?? "" }}
           </p>
           <v-spacer></v-spacer>
           <div class="main_image">
             <img src="@/assets/icons/roommate/Icon-marker.svg" alt="" />
             <p class="main_image_text title-t11-regular">
               <span style="color: #2a5fc5">{{
-                index.chatRoomResponse.currentUsers
+                index.chatRoomResponse.currentUsers ?? 0
               }}</span>
               <span>/</span>
-              <span>{{ index.chatRoomResponse.maxUser }}</span>
+              <span>{{ index.chatRoomResponse.maxUser ?? "4" }}</span>
             </p>
           </div>
         </div>
         <div class="d-flex">
           <p class="title-t11-regular-grey" style="color: #585858">
-            {{ index.nickname }}
+            {{ index.nickname ?? "" }}
           </p>
           <v-spacer></v-spacer>
           <v-progress-linear
             :model-value="
-              (index.chatRoomResponse.currentUsers /
-                index.chatRoomResponse.maxUser) *
-              100
+              (index.chatRoomResponse.currentUsers ??
+                0 / index.chatRoomResponse.maxUser ??
+                4) * 100
             "
             bgColor="grey"
             :rounded="true"
@@ -92,7 +101,7 @@
           block
           :height="41"
           rounded="15"
-          @click="router.push('/roommate/detail')"
+          @click="router.push(`/roommate/detail?id=${index.post_id}`)"
         >
           자세히 보기
         </v-btn>
@@ -122,6 +131,7 @@
 
 <script setup>
 const room = useRoomStore();
+const auth = useAuthStore();
 
 const router = useRouter();
 const roommates = definePageMeta({
@@ -130,8 +140,8 @@ const roommates = definePageMeta({
   layout: "home",
 });
 
-onBeforeMount(() => {
-  room.getRoomList();
+onBeforeMount(async () => {
+  await room.getRoomList();
 });
 </script>
 

@@ -67,6 +67,9 @@ export default defineNuxtConfig({
       gen: 2,
     },
   },
+  piniaPersistedstate: {
+    storage: "localStorage",
+  },
   plugins: [{ src: "~/plugins/socket.client.js", mode: "client" }],
   runtimeConfig: {
     public: {
