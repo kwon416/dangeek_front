@@ -7,36 +7,31 @@
           <IconAvatar1 />
         </template>
         <template v-slot:title>
-          <p class="title-t20-bold ps-2" style="color: #3867e7">nickname</p>
+          <p class="title-t20-bold ps-2" style="color: #3867e7">
+            {{ room.roomDetail.nickname }}
+          </p>
         </template>
       </v-card>
       <div class="d-flex">
         <p class="title-t18-bold pt-5" style="line-height: 15px">
-          {{ data.title }}
+          {{ room.roomDetail.title }}
         </p>
         <v-spacer></v-spacer>
         <div class="main_image">
           <img src="@/assets/icons/roommate/Icon-marker.svg" alt="" />
           <p class="main_image_text title-t11-regular">
             <span style="color: #2a5fc5">{{
-              data.chatRoomResponse.currentUsers
+              room.roomDetail.chatRoomResponse.currentUsers
             }}</span>
             <span>/</span>
-            <span>{{ data.chatRoomResponse.maxUser }}</span>
+            <span>{{ room.roomDetail.chatRoomResponse.maxUser }}</span>
           </p>
         </div>
       </div>
       <div class="d-flex">
-        <p class="title-t11-regular-grey" style="color: #585858">
-          {{ data.nickname }}
-        </p>
+        <p class="title-t11-regular-grey" style="color: #585858">조회수</p>
         <v-spacer></v-spacer>
         <v-progress-linear
-          :model-value="
-            (data.chatRoomRespponse.currentUsers /
-              data.chatRoomRespponse.maxUser) *
-            100
-          "
           bgColor="grey"
           :rounded="true"
           :roundedBar="true"
@@ -84,12 +79,10 @@
 const route = useRoute();
 const { id } = route.query;
 const room = useRoomStore();
-const data = ref(null);
 
 onBeforeMount(async () => {
   console.log(id);
-  data.value = await room.getDetail(id);
-  console.log(data.value.title);
+  await room.getDetail(id);
 });
 </script>
 

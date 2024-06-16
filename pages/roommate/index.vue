@@ -88,9 +88,9 @@
           <v-spacer></v-spacer>
           <v-progress-linear
             :model-value="
-              (index.chatRoomResponse.currentUsers ??
-                0 / index.chatRoomResponse.maxUser ??
-                4) * 100
+              (index.chatRoomResponse.currentUsers /
+                index.chatRoomResponse.maxUser) *
+              100
             "
             bgColor="grey"
             :rounded="true"

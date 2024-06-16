@@ -51,7 +51,7 @@ export const useRoomStore = defineStore(
       // Error handling
       if (response) {
         console.log("getDetail success");
-
+        roomDetail.value = response;
         return response;
       } else {
         console.log("getDetail failed");
@@ -77,6 +77,7 @@ export const useRoomStore = defineStore(
 
     return {
       roomList,
+      roomDetail,
       getRoomList,
       getDetail,
       writeRoom,
