@@ -120,9 +120,9 @@ export const useAuthStore = defineStore(
       }
     }
 
-    async function writeServey(data) {
+    async function writeSurvey(data) {
       console.log("writeServey start");
-      const response = await authAPI.writeServey(data);
+      const response = await authAPI.writeSurvey(data);
 
       console.log(response);
       // Error handling

@@ -70,7 +70,7 @@ const authAPI = {
     }
   },
 
-  async writeServey(data) {
+  async writeSurvey(data) {
     try {
       const headers = {
         Authorization: `Bearer ${useAuthStore().userInfo.accessToken}`,

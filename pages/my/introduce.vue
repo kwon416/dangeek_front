@@ -154,7 +154,7 @@ async function clickSummit() {
   console.log(values.value.q11);
   console.log(values.value.q12);
   console.log(values.value.q13);
-  const response = await auth.writeServey(values.value);
+  const response = await auth.writeSurvey(values.value);
   if (response) {
     await auth.myPage();
     router.back();
