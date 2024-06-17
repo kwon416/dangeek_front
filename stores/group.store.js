@@ -56,11 +56,27 @@ export const useGroupStore = defineStore(
       }
     }
 
+    async function createGroup(data) {
+      console.log("createGroup start");
+      const response = await groupAPI.createGroup(data);
+
+      console.log(response);
+      // Error handling
+      if (response) {
+        console.log("createGroup success");
+        return true;
+      } else {
+        console.log("createGroup failed");
+        return false;
+      }
+    }
+
     return {
       groupList,
       groupDetail,
       getGroupList,
       getGroupDetail,
+      createGroup,
     };
   },
   { persist: true }

@@ -28,6 +28,23 @@ const groupAPI = {
       return null;
     }
   },
+
+  async createGroup(data) {
+    try {
+      const headers = {
+        Authorization: `Bearer ${useAuthStore().userInfo.accessToken}`,
+      };
+
+      return HTTP_REQUEST.POST(
+        `${baseUrl}/post/group_buy/create`,
+        data,
+        headers
+      );
+    } catch (error) {
+      console.error(error);
+      return null;
+    }
+  },
 };
 
 export default groupAPI;

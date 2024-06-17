@@ -44,10 +44,7 @@
             @click="router.push(`/group/detail?id=${i.post_id}`)"
           >
             <div class="d-flex" style="justify-content: start">
-              <img
-                src="https://picsum.photos/200/300"
-                alt="Image description"
-              />
+              <img :src="i.imageUrl" alt="Image description" />
               <p class="title-t16-medium ps-3">{{ i.title }}</p>
             </div>
             <div class="card-footer">
