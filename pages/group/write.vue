@@ -3,7 +3,6 @@
     <TopBar title="공동구매 및 할인"></TopBar>
     <v-container>
       <div class="ms-auto" style="width: 143px">
-        <CustomTextInput label="제목" v-model="data.title" />
         <v-select
           class="ms-3"
           rounded="23"
@@ -26,6 +25,10 @@
             </p>
           </template>
         </v-select>
+      </div>
+      <div class="d-flex">
+        <p style="padding-top: 10px; width: 80px">제목</p>
+        <CustomTextInput label="" v-model="data.title" />
       </div>
       <div class="d-flex">
         <p style="padding-top: 10px; width: 80px">링크</p>

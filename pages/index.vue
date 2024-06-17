@@ -60,11 +60,7 @@
       <v-window v-model="windowNumber">
         <!-- 1. 룸메 찾기 -->
         <v-window-item>
-          <v-card
-            rounded="15"
-            class="justify-center align-center"
-            @click="router.push('/roommate')"
-          >
+          <v-card rounded="15" class="justify-center align-center">
             <template v-slot:title>
               <p class="title-t16-bold" style="color: #2a5fc5">
                 가장 최근 글 Top 3
@@ -77,6 +73,7 @@
               <v-list-item
                 v-for="index in room.roomList.slice(0, 3)"
                 :key="index"
+                @click="router.push(`/roommate/detail?id=${index.post_id}`)"
               >
                 <template v-slot:title>
                   <p class="title-t11-regular-grey mb-2">
@@ -103,9 +100,30 @@
                 가장 최근 글 Top 3
               </p>
             </template>
-            <template v-slot:text>
+            <!-- <template v-slot:text>
               <span>window {{ windowNumber + 1 }}</span>
-            </template>
+            </template> -->
+            <v-list lines="two">
+              <v-list-item
+                v-for="index in group.groupList.slice(0, 3)"
+                :key="index"
+                @click="router.push(`/group/detail?id=${index.post_id}`)"
+              >
+                <template v-slot:title>
+                  <p class="title-t11-regular-grey mb-2">
+                    <span>{{ index.nickname }}님의 글</span>
+                    <span style="padding-left: 11px"
+                      >{{ Math.floor(Math.random() * 100) }}분전</span
+                    >
+                  </p>
+                </template>
+                <div class="d-flex">
+                  <p class="title-t14-medium">{{ index.title }}</p>
+                  <v-spacer />
+                  <IconForward icon-color="#2A5FC5" />
+                </div>
+              </v-list-item>
+            </v-list>
           </v-card>
         </v-window-item>
       </v-window>
@@ -141,6 +159,7 @@
 const router = useRouter();
 const windowNumber = ref(0);
 const room = useRoomStore();
+const group = useGroupStore();
 
 definePageMeta({
   title: "Home",
@@ -151,6 +170,7 @@ definePageMeta({
 onMounted(async () => {
   console.log("Home page mounted");
   await room.getRoomList();
+  await group.getGroupList();
 });
 </script>
 
