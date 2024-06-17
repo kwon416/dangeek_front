@@ -1,13 +1,17 @@
 <template>
   <v-main>
     <TopBar title="공동구매 및 할인" />
-    <img src="https://picsum.photos/200/200" alt="" />
+    <img :src="group.groupDetail.imageUrl" alt="" />
     <v-container>
       <div class="d-flex">
         <IconAvatar1 />
-        <p class="title-t20-regular ps-4" style="color: #3867e7">nickname</p>
+        <p class="title-t20-regular ps-4" style="color: #3867e7">
+          {{ group.groupDetail?.nickname }}
+        </p>
         <v-spacer></v-spacer>
-        <p class="tilte-t24-bold" style="color: #505050">21,319원</p>
+        <p class="tilte-t24-bold" style="color: #505050">
+          {{ group.groupDetail.price }}
+        </p>
       </div>
       <div class="divider"></div>
       <div style="display: block; width: fit-content">
@@ -17,7 +21,7 @@
             style="line-height: 15px; padding-bottom: 6px"
           >
             <span class="me-9">상품명</span>
-            <span>동원 개성 왕만두 2.24kg/김치만두 2봉</span>
+            <span>{{ group.groupDetail.title }}</span>
           </p>
         </div>
         <div class="d-flex pt-1" style="justify-content: start">
@@ -26,7 +30,7 @@
             style="line-height: 15px; padding-bottom: 6px"
           >
             <span class="me-9">쇼핑몰</span>
-            <span>알리익스프레스</span>
+            <span>{{ group.groupDetail.mallName }}</span>
           </p>
         </div>
         <div class="d-flex pt-1" style="justify-content: start">
@@ -44,14 +48,13 @@
             style="line-height: 15px; padding-bottom: 6px"
           >
             <span class="me-12">링크</span>
-            <span>https://a.aliexpress.com/</span>
+            <span>{{ group.groupDetail.link }}</span>
           </p>
         </div>
       </div>
       <div class="divider"></div>
       <p>
-        양이 너무 많은거 같아서 같이 나눠먹을 사람 구합니다~ 기숙사에서
-        전자레인지로 돌리기만 해도 맛있게 먹을 수 있어요.
+        {{ group.groupDetail.contents }}
       </p>
       <div style="height: 133px"></div>
     </v-container>
@@ -65,12 +68,21 @@
       height="53"
       @click="router.back()"
     >
-      <p class="title-t18-bold">저장하기</p>
+      <p class="title-t18-bold">채팅 신청하기</p>
     </v-btn>
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+const router = useRouter();
+const group = useGroupStore();
+const route = useRoute();
+const { id } = route.query;
+
+onMounted(async () => {
+  await group.getGroupDetail(id);
+});
+</script>
 
 <style lang="scss" scoped>
 img {

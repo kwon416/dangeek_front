@@ -4,7 +4,10 @@
       <IconMoney />
       <div style="height: 60px; margin-left: -2px; margin-top: auto">
         <p class="title">
-          <span style="color: #79a1e6; font-size: 20px">name</span> 님!
+          <span style="color: #79a1e6; font-size: 20px">
+            {{ auth.userInfo.nickname }}
+          </span>
+          님!
         </p>
         <p class="title">공동구매로 돈을 절약해보세요.</p>
       </div>
@@ -34,23 +37,28 @@
       <v-window-item :value="sizes[0]">
         <v-container>
           <v-card
-            v-for="i in 7"
+            v-for="i in group.groupList"
+            v-bind:key="i.post_id"
             class="pa-6 mb-2"
             rounded="15"
-            @click="router.push('/group/detail')"
+            @click="router.push(`/group/detail?id=${i.post_id}`)"
           >
             <div class="d-flex" style="justify-content: start">
               <img
                 src="https://picsum.photos/200/300"
                 alt="Image description"
               />
-              <p class="title-t16-medium ps-3">안동찜닭 시켜먹을 사람</p>
+              <p class="title-t16-medium ps-3">{{ i.title }}</p>
             </div>
             <div class="card-footer">
-              <div class="views pt-2">15명이 이 글을 보고있어요</div>
+              <div class="views pt-2">{{ i.chatRoomResponse.name }}</div>
               <div class="chat-progress-bar">
                 <v-progress-linear
-                  :model-value="50"
+                  :model-value="
+                    (i.chatRoomResponse.currentUsers /
+                      i.chatRoomResponse.maxUser) *
+                    100
+                  "
                   bgColor="grey"
                   :rounded="true"
                   :roundedBar="true"
@@ -61,9 +69,11 @@
               <div class="main_image">
                 <img src="@/assets/icons/roommate/Icon-marker.svg" alt="" />
                 <p class="main_image_text title-t11-regular">
-                  <span style="color: #2a5fc5">2</span>
+                  <span style="color: #2a5fc5">{{
+                    i.chatRoomResponse.currentUsers
+                  }}</span>
                   <span>/</span>
-                  <span>4</span>
+                  <span>{{ i.chatRoomResponse.maxUser }}</span>
                 </p>
               </div>
             </div>
@@ -216,6 +226,12 @@
 const router = useRouter();
 const selection = ref("배달음식");
 const sizes = ["배달음식", "냉동식품", "냉장식품", "기타식품"];
+const auth = useAuthStore();
+const group = useGroupStore();
+
+onMounted(async () => {
+  await group.getGroupList();
+});
 
 definePageMeta({
   title: "Group",
