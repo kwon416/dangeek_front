@@ -32,6 +32,11 @@
         <p class="title-t11-regular-grey" style="color: #585858">조회수</p>
         <v-spacer></v-spacer>
         <v-progress-linear
+          :modelValue="
+            (room.roomDetail.chatRoomResponse.currentUsers /
+              room.roomDetail.chatRoomResponse.maxUser) *
+            100
+          "
           bgColor="grey"
           :rounded="true"
           :roundedBar="true"
@@ -46,24 +51,19 @@
         작성자의 생활 습관 및 성향
       </p>
       <div style="gap: 14px 17px; display: flex; flex-wrap: wrap">
-        <CustomChip text="몰13213123루" />
-        <CustomChip text="몰13213123루" />
-        <CustomChip text="몰13213123루" />
-        <CustomChip text="몰13213123루" />
-        <CustomChip text="몰13213123루" />
-
-        <CustomChip text="몰루" />
-        <CustomChip text="몰루" />
-        <CustomChip text="몰루" />
+        <CustomChip text="일찍 자고 일어나는 성향" />
+        <CustomChip text="취침 밤 11시" />
+        <CustomChip text="기상 아침 7시" />
+        <CustomChip text="조용한 환경 선호" />
+        <CustomChip text="늦은 시간 시끄러운 활동 불호" />
       </div>
       <p class="title-t18-bold pt-10 pb-4" style="color: #2a5fc5">
         작성자의 취미 및 관심사
       </p>
       <div style="gap: 14px 17px; display: flex; flex-wrap: wrap">
-        <CustomChip text="몰13213123루" />
-        <CustomChip text="몰루" />
-        <CustomChip text="몰루" />
-        <CustomChip text="몰루" />
+        <CustomChip text="책읽기" />
+        <CustomChip text="음악감상" />
+        <CustomChip text="주말운동" />
       </div>
       <div style="height: 93px"></div>
     </v-container>

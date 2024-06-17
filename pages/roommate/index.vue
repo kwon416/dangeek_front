@@ -144,6 +144,7 @@ const roommates = definePageMeta({
 });
 
 onBeforeMount(async () => {
+  await auth.myPage();
   await room.getRoomList();
 });
 </script>
