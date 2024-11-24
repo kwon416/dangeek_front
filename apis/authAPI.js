@@ -124,6 +124,31 @@ const authAPI = {
       return null;
     }
   },
+
+  async verifyEmail(email) {
+    try {
+      const body = {
+        username: email,
+      };
+      return HTTP_REQUEST.POST(`${baseUrl}/auth/univ_certify`, body);
+    } catch (error) {
+      console.error(error);
+      return null;
+    }
+  },
+
+  async certifyCode(email, code) {
+    try {
+      const body = {
+        username: email,
+        code: code,
+      };
+      return HTTP_REQUEST.POST(`${baseUrl}/auth/univ_certify_code`, body);
+    } catch (error) {
+      console.error(error);
+      return null;
+    }
+  },
 };
 
 export default authAPI;

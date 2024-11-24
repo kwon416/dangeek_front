@@ -73,7 +73,7 @@ export default defineNuxtConfig({
   plugins: [{ src: "~/plugins/socket.client.js", mode: "client" }],
   runtimeConfig: {
     public: {
-      API_BASE_URL: process.env.API_BASE_URL || "",
+      API_BASE_URL: process.env.API_BASE_URL || "http://13.124.161.93:8080",
     },
   },
   ssr: false,

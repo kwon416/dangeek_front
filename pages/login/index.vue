@@ -39,6 +39,7 @@
             type="submit"
             block
             :height="53"
+            :disabled="!form"
           ></v-btn
         ></v-form>
 
@@ -93,17 +94,28 @@ const checkApi = (username) => {
 };
 
 const submit = async (event) => {
-  loading.value = true;
-
-  const results = await auth.login(username.value, password.value);
-  if (!results) {
-    loading.value = false;
+  if (!username.value || !password.value) {
+    alert("아이디와 패스워드를 모두 입력해주세요.");
     return;
   }
-  loading.value = false;
 
-  // alert(JSON.stringify(results, null, 2));
-  router.push("/");
+  loading.value = true;
+
+  try {
+    const results = await auth.login(username.value, password.value);
+
+    if (!results) {
+      alert("아이디 또는 비밀번호가 일치하지 않습니다.");
+      return;
+    }
+
+    router.push("/");
+  } catch (error) {
+    console.error("로그인 에러:", error);
+    alert("아이디 또는 비밀번호가 일치하지 않습니다.");
+  } finally {
+    loading.value = false;
+  }
 };
 
 // watch(userName, (newValue) => {

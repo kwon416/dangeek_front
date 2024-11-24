@@ -111,7 +111,7 @@
             <v-btn
               class="v-btn__gradient"
               :loading="loading"
-              :disabled="certNumber.length == 6 ? false : true"
+              :disabled="certNumber.length == 4 ? false : true"
               text="인증완료"
               @click="submitValidate(event)"
               block
@@ -371,23 +371,42 @@ const submit = async (event) => {
 
   loading.value = true;
 
-  const results = await event;
+  try {
+    // 학교 인증 이메일 발송 API 호출
+    // const response = await auth.verifyEmail(username.value);
+    const response = true;
 
-  loading.value = false;
-
-  // alert(JSON.stringify(results, null, 2));
-  windowNumber.value = 1;
+    if (response) {
+      windowNumber.value = 1; // 이메일 인증 화면으로 이동
+    } else {
+      alert("학교 인증 이메일 발송에 실패했습니다.");
+    }
+  } catch (error) {
+    alert("오류가 발생했습니다. 다시 시도해주세요.");
+    console.error(error);
+  } finally {
+    loading.value = false;
+  }
 };
 
 // 학교 인증하기
-const submitValidate = async (event) => {
+const submitValidate = async () => {
   loading.value = true;
 
-  const results = await event;
+  try {
+    const response = await auth.certifyCode(username.value, certNumber.value);
 
-  loading.value = false;
-
-  windowNumber.value = 2;
+    if (response) {
+      windowNumber.value = 2; // 다음 단계로 이동
+    } else {
+      alert("인증번호가 일치하지 않습니다.");
+    }
+  } catch (error) {
+    alert("인증 과정에서 오류가 발생했습니다.");
+    console.error(error);
+  } finally {
+    loading.value = false;
+  }
 };
 
 // watch(userName, (newValue) => {
@@ -426,8 +445,28 @@ function resendEmail() {
 
 // 회원가입 완료 메인으로 이동
 async function clickComplete() {
-  isCompleteDialogOpend.value = false;
-  router.push("/");
+  loading.value = true;
+
+  try {
+    // 회원가입 완료 후 자동 로그인 시도
+    const loginResult = await auth.login(username.value, password.value);
+
+    if (!loginResult) {
+      alert("자동 로그인에 실패했습니다. 로그인 페이지로 이동합니다.");
+      router.push("/login");
+      return;
+    }
+
+    // 로그인 성공 시 메인으로 이동
+    isCompleteDialogOpend.value = false;
+    router.push("/");
+  } catch (error) {
+    console.error("자동 로그인 에러:", error);
+    alert("로그인 중 오류가 발생했습니다. 로그인 페이지로 이동합니다.");
+    router.push("/login");
+  } finally {
+    loading.value = false;
+  }
 }
 </script>
 

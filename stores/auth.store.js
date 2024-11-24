@@ -160,6 +160,37 @@ export const useAuthStore = defineStore(
       }
     }
 
+    // 학교 인증 이메일 발송
+    async function verifyEmail(email) {
+      console.log("verifyEmail start");
+      const response = await authAPI.verifyEmail(email);
+
+      console.log(response);
+      // Error handling
+      if (response) {
+        console.log("verifyEmail success");
+        return true;
+      } else {
+        console.log("verifyEmail failed");
+        return false;
+      }
+    }
+
+    // 학교 인증 코드 인증
+    async function certifyCode(email, code) {
+      console.log("certifyCode start");
+      const response = await authAPI.certifyCode(email, code);
+
+      console.log(response);
+      if (response) {
+        console.log("certifyCode success");
+        return true;
+      } else {
+        console.log("certifyCode failed");
+        return false;
+      }
+    }
+
     return {
       userInfo,
       signup,
@@ -170,6 +201,8 @@ export const useAuthStore = defineStore(
       getMyIntroduction,
       writeSurvey,
       saveIntroduce,
+      verifyEmail,
+      certifyCode,
     };
   },
   { persist: true }
