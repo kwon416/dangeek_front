@@ -1,7 +1,14 @@
 <template>
   <v-main>
     <TopBar title="공동구매 및 할인" />
-    <img :src="group.groupDetail.imageUrl" alt="" />
+    <img
+      :src="
+        group.groupDetail.imageUrl ||
+        'https://via.placeholder.com/200?text=NO_IMAGE'
+      "
+      :alt="group.groupDetail.title || '상품 이미지'"
+      @error="handleImageError"
+    />
     <v-container>
       <div class="d-flex">
         <IconAvatar1 />
@@ -61,7 +68,6 @@
   </v-main>
   <div class="pb-10 pt-10 bottom-btn-wrapper">
     <v-btn
-      v-bind="activatorProps"
       block
       class="v-btn__gradient"
       rounded="15"
@@ -82,6 +88,11 @@ const { id } = route.query;
 onMounted(async () => {
   await group.getGroupDetail(id);
 });
+
+function handleImageError(e) {
+  // 이미지 로드 실패시 placeholder 이미지로 대체
+  e.target.src = "/images/placeholder.png";
+}
 </script>
 
 <style lang="scss" scoped>
