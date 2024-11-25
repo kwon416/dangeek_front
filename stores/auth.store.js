@@ -19,6 +19,9 @@ export const useAuthStore = defineStore(
       major: "",
       grade: "",
       sex: "",
+      contents: "",
+      personality: [],
+      hobbies: [],
     });
 
     async function signup(username, password, nickname) {
@@ -153,6 +156,9 @@ export const useAuthStore = defineStore(
         userIntroduce.value.major = response.major;
         userIntroduce.value.grade = response.grade;
         userIntroduce.value.sex = response.sex;
+        userIntroduce.value.contents = response.contents;
+        userIntroduce.value.personality = response.personality;
+        userIntroduce.value.hobbies = response.hobbies;
         return true;
       } else {
         console.log("saveIntroduce failed");
@@ -193,6 +199,7 @@ export const useAuthStore = defineStore(
 
     return {
       userInfo,
+      userIntroduce,
       signup,
       login,
       myPage,

@@ -103,6 +103,7 @@ const submit = async (event) => {
 
   try {
     const results = await auth.login(username.value, password.value);
+    // const results = true;
 
     if (!results) {
       alert("아이디 또는 비밀번호가 일치하지 않습니다.");

@@ -103,6 +103,8 @@ const authAPI = {
 
   async saveIntroduce(data) {
     try {
+      console.log(data);
+      console.dir(data);
       const headers = {
         Authorization: `Bearer ${useAuthStore().userInfo.accessToken}`,
       };
@@ -112,6 +114,9 @@ const authAPI = {
         major: data.major,
         grade: data.grade,
         sex: data.sex,
+        contents: data.contents,
+        personality: data.personality,
+        hobbies: data.hobbies,
       };
 
       return HTTP_REQUEST.POST(
