@@ -44,16 +44,16 @@
             @click="router.push(`/group/detail?id=${i.post_id}`)"
           >
             <div class="d-flex" style="justify-content: start">
-              <img :src="i.imageUrl" alt="Image description" />
+              <img :src="i.imageUrl" alt="desc" />
               <p class="title-t16-medium ps-3">{{ i.title }}</p>
             </div>
             <div class="card-footer">
-              <div class="views pt-2">{{ i.chatRoomResponse.name }}</div>
+              <div class="views pt-2">{{ i.chatRoomResponseDto?.name }}</div>
               <div class="chat-progress-bar">
                 <v-progress-linear
                   :model-value="
-                    (i.chatRoomResponse.currentUsers /
-                      i.chatRoomResponse.maxUser) *
+                    (i.chatRoomResponseDto?.currentUsers /
+                      i.chatRoomResponseDto?.maxUser) *
                     100
                   "
                   bgColor="grey"
@@ -67,10 +67,10 @@
                 <img src="@/assets/icons/roommate/Icon-marker.svg" alt="" />
                 <p class="main_image_text title-t11-regular">
                   <span style="color: #2a5fc5">{{
-                    i.chatRoomResponse.currentUsers
+                    i.chatRoomResponseDto?.currentUsers
                   }}</span>
                   <span>/</span>
-                  <span>{{ i.chatRoomResponse.maxUser }}</span>
+                  <span>{{ i.chatRoomResponseDto?.maxUser }}</span>
                 </p>
               </div>
             </div>
@@ -81,6 +81,7 @@
         <v-container>
           <v-card
             v-for="i in 7"
+            :key="i"
             class="pa-6 mb-2"
             rounded="15"
             @click="router.push('/group/detail')"
@@ -122,6 +123,7 @@
         <v-container>
           <v-card
             v-for="i in 7"
+            :key="i"
             class="pa-6 mb-2"
             rounded="15"
             @click="router.push('/group/detail')"
@@ -161,6 +163,7 @@
         <v-container>
           <v-card
             v-for="i in 7"
+            :key="i"
             class="pa-6 mb-2"
             rounded="15"
             @click="router.push('/group/detail')"

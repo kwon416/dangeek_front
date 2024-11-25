@@ -51,8 +51,15 @@
         <CustomTextInput label="" />
       </div>
       <CustomTextArea label="내용을 입력하세요" v-model="data.contents" />
-      <input type="file" @change="onFileChange" accept="image/*" />
-      <!-- <img v-if="file" :src="file" alt="Uploaded Image" /> -->
+      <div>
+        <input type="file" @change="onFileChange" accept="image/*" />
+        <img
+          v-if="previewImage"
+          :src="previewImage"
+          alt="미리보기"
+          style="max-width: 300px; margin-top: 10px"
+        />
+      </div>
       <div style="height: 93px"></div>
     </v-container>
     <div class="pb-10 bottom-btn-wrapper">
@@ -75,7 +82,7 @@ const group = useGroupStore();
 const data = ref({
   title: "",
   contents: "",
-  maxUsers: 2,
+  // maxUsers: 2,
   link: "",
   mallName: "",
   item: "",
@@ -83,6 +90,7 @@ const data = ref({
 });
 const file = ref(null);
 const formData = new FormData();
+const previewImage = ref(null);
 
 async function onSummit() {
   if (file.value) {
@@ -90,7 +98,7 @@ async function onSummit() {
   }
   data.value.price += "원";
   formData.append(
-    "post",
+    "text",
     new Blob([JSON.stringify(data.value)], { type: "application/json" })
   );
 
@@ -101,6 +109,17 @@ async function onSummit() {
 }
 function onFileChange(e) {
   file.value = e.target.files[0];
+
+  // 이미지 미리보기 생성
+  if (file.value) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      previewImage.value = e.target.result;
+    };
+    reader.readAsDataURL(file.value);
+  } else {
+    previewImage.value = null;
+  }
 }
 </script>
 

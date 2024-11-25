@@ -3,7 +3,10 @@
     <v-app-bar class="px-6">
       <div style="height: 60px; margin-left: 14px; margin-top: auto">
         <p class="title">
-          <span style="color: #79a1e6; font-size: 20px">name</span> 님!
+          <span style="color: #79a1e6; font-size: 20px">{{
+            auth.userInfo.nickname
+          }}</span>
+          님!
         </p>
         <p class="title">자유롭게 채팅해보세요.</p>
       </div>
@@ -57,6 +60,7 @@
 </template>
 
 <script setup>
+const auth = useAuthStore();
 definePageMeta({
   title: "Chat",
   description: "Chat page",

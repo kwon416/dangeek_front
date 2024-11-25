@@ -58,6 +58,8 @@ export const useGroupStore = defineStore(
 
     async function createGroup(data) {
       console.log("createGroup start");
+      console.log(data);
+      console.dir(data, { depth: null });
       const response = await groupAPI.createGroup(data);
 
       console.log(response);
