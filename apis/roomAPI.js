@@ -38,7 +38,7 @@ const roomAPI = {
       const body = {
         title: data.title,
         contents: data.contents,
-        maxUser: data.maxUser,
+        // maxUser: data.maxUser,
       };
       return HTTP_REQUEST.POST(`${baseUrl}/post/invite/create`, body, headers);
     } catch (error) {
