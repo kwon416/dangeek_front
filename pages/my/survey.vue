@@ -131,7 +131,7 @@ const values = ref({
   q10: null,
   q11: null,
   q12: null,
-  q13: null,
+  q13: [],
 });
 
 const auth = useAuthStore();
@@ -140,64 +140,43 @@ onBeforeMount(() => {
   console.log("mounted");
 });
 
+const hobbyMap = {
+  게임: "game",
+  스포츠: "sports",
+  독서: "read",
+  미술: "art",
+  영화감상: "movie",
+  수집: "collect",
+  공예: "craft",
+  관찰: "observe",
+  여행: "travel",
+  음악: "music",
+  요리: "cook",
+  사진: "photo",
+};
+
 async function clickSummit() {
-  console.log(values.value.q1);
-  console.log(values.value.q2);
-  console.log(values.value.q3);
-  console.log(values.value.q4);
-  console.log(values.value.q5);
-  console.log(values.value.q6);
-  console.log(values.value.q7);
-  console.log(values.value.q8);
-  console.log(values.value.q9);
-  console.log(values.value.q10);
-  console.log(values.value.q11);
-  console.log(values.value.q12);
+  const surveyData = {
+    cleanliness: {
+      answer1: values.value.q1,
+      answer2: values.value.q2,
+      answer3: values.value.q3,
+      answer4: values.value.q4,
+      answer5: values.value.q5,
+      answer6: values.value.q6,
+      answer7: values.value.q7,
+      answer8: values.value.q8,
+      answer9: values.value.q9,
+      answer10: values.value.q10,
+    },
+    wakeTime: Number(values.value.q12),
+    sleepTime: Number(values.value.q11),
+    hobbies: values.value.q13
+      ? values.value.q13.map((hobby) => hobbyMap[hobby])
+      : [],
+  };
 
-  values.value.q13.map((hobby) => {
-    switch (hobby) {
-      case "게임":
-        values.value.q13[values.value.q13.indexOf(hobby)] = "game";
-        break;
-      case "스포츠":
-        values.value.q13[values.value.q13.indexOf(hobby)] = "sports";
-        break;
-      case "독서":
-        values.value.q13[values.value.q13.indexOf(hobby)] = "read";
-        break;
-      case "미술":
-        values.value.q13[values.value.q13.indexOf(hobby)] = "art";
-        break;
-      case "영화감상":
-        values.value.q13[values.value.q13.indexOf(hobby)] = "movie";
-        break;
-      case "수집":
-        values.value.q13[values.value.q13.indexOf(hobby)] = "collect";
-        break;
-      case "공예":
-        values.value.q13[values.value.q13.indexOf(hobby)] = "craft";
-        break;
-      case "관찰":
-        values.value.q13[values.value.q13.indexOf(hobby)] = "observe";
-        break;
-      case "여행":
-        values.value.q13[values.value.q13.indexOf(hobby)] = "travel";
-        break;
-      case "음악":
-        values.value.q13[values.value.q13.indexOf(hobby)] = "music";
-        break;
-      case "요리":
-        values.value.q13[values.value.q13.indexOf(hobby)] = "cook";
-        break;
-      case "사진":
-        values.value.q13[values.value.q13.indexOf(hobby)] = "photo";
-        break;
-    }
-  });
-
-  console.log(values.value.q13);
-
-  const response = await auth.writeSurvey(values.value);
+  const response = await auth.writeSurvey(surveyData);
   if (response) {
     await auth.myPage();
     router.back();

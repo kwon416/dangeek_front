@@ -170,7 +170,7 @@ definePageMeta({
 onMounted(async () => {
   console.log("Home page mounted");
   await room.getRoomList();
-  await group.getGroupList();
+  // await group.getGroupList();
 });
 </script>
 

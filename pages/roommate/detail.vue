@@ -21,10 +21,10 @@
           <img src="@/assets/icons/roommate/Icon-marker.svg" alt="" />
           <p class="main_image_text title-t11-regular">
             <span style="color: #2a5fc5">{{
-              room.roomDetail.chatRoomResponse.currentUsers
+              room.roomDetail.chatRoomResponseDto.currentUsers
             }}</span>
             <span>/</span>
-            <span>{{ room.roomDetail.chatRoomResponse.maxUser }}</span>
+            <span>{{ room.roomDetail.chatRoomResponseDto.maxUser }}</span>
           </p>
         </div>
       </div>
@@ -33,8 +33,8 @@
         <v-spacer></v-spacer>
         <v-progress-linear
           :modelValue="
-            (room.roomDetail.chatRoomResponse.currentUsers /
-              room.roomDetail.chatRoomResponse.maxUser) *
+            (room.roomDetail.chatRoomResponseDto.currentUsers /
+              room.roomDetail.chatRoomResponseDto.maxUser) *
             100
           "
           bgColor="grey"

@@ -72,10 +72,10 @@
             <img src="@/assets/icons/roommate/Icon-marker.svg" alt="" />
             <p class="main_image_text title-t11-regular">
               <span style="color: #2a5fc5">{{
-                index.chatRoomResponse.currentUsers ?? 0
+                index.chatRoomResponseDto?.currentUsers ?? 0
               }}</span>
               <span>/</span>
-              <span>{{ index.chatRoomResponse.maxUser ?? "4" }}</span>
+              <span>{{ index.chatRoomResponseDto?.maxUser ?? "4" }}</span>
             </p>
           </div>
         </div>
@@ -86,9 +86,8 @@
           <v-spacer></v-spacer>
           <v-progress-linear
             :model-value="
-              (index.chatRoomResponse.currentUsers /
-                index.chatRoomResponse.maxUser) *
-              100
+              (index.chatRoomResponseDto?.currentUsers ??
+                0 / (index.chatRoomResponseDto?.maxUser ?? 4)) * 100
             "
             bgColor="grey"
             :rounded="true"
