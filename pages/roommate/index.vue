@@ -18,33 +18,31 @@
       :show-arrows="false"
       class="mt-9 mb-5"
     >
-      <v-slide-group-item v-for="i in 8" :key="i">
-        <!--                    6. 프레젠테이션 프로필 div -->
+      <v-slide-group-item
+        v-for="recommend in recommendList"
+        :key="recommend.id"
+      >
         <div
           class="presentation_profile"
           @click="router.push('/roommate/story')"
         >
-          <!--                    7. 프로필 이미지 묶음 div -->
           <div class="presentation_profile_image">
-            <!--                            8. 프로필 테두리 div-->
             <div class="presentation_profile_image_border"></div>
-            <!--                            8. 프로필 이미지 div -->
             <div class="presentation_profile_image_canvas profile_love">
               <IconAvatar1
-                v-if="parseInt(i % 3) == 0"
+                v-if="parseInt(recommend.id % 3) == 0"
                 :width="60"
                 :height="60"
               />
               <IconAvatar2
-                v-else-if="parseInt(i % 3) == 1"
+                v-else-if="parseInt(recommend.id % 3) == 1"
                 :width="60"
                 :height="60"
               />
               <IconAvatar3 v-else :width="60" :height="60" />
             </div>
           </div>
-          <!--                    7. 프로필 이름 a-->
-          <p class="presentation_profile_name">nickname</p>
+          <p class="presentation_profile_name">{{ recommend.nickname }}</p>
         </div>
       </v-slide-group-item>
     </v-slide-group>
@@ -137,6 +135,8 @@ const room = useRoomStore();
 const auth = useAuthStore();
 
 const router = useRouter();
+const recommendList = ref([]);
+
 const roommates = definePageMeta({
   title: "Roommate",
   description: "Roommate page",
@@ -146,6 +146,12 @@ const roommates = definePageMeta({
 onBeforeMount(async () => {
   await auth.myPage();
   await room.getRoomList();
+  if (auth.userInfo.introductionWritten) {
+    const response = await auth.getRecommend();
+    if (response) {
+      recommendList.value = response;
+    }
+  }
 });
 </script>
 

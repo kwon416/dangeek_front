@@ -197,6 +197,21 @@ export const useAuthStore = defineStore(
       }
     }
 
+    async function getRecommend() {
+      console.log("getRecommend start");
+      const response = await authAPI.getRecommend();
+
+      console.log(response);
+      // Error handling
+      if (response) {
+        console.log("getRecommend success");
+        return response;
+      } else {
+        console.log("getRecommend failed");
+        return false;
+      }
+    }
+
     return {
       userInfo,
       userIntroduce,
@@ -210,6 +225,7 @@ export const useAuthStore = defineStore(
       saveIntroduce,
       verifyEmail,
       certifyCode,
+      getRecommend,
     };
   },
   { persist: true }

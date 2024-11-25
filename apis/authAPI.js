@@ -154,6 +154,18 @@ const authAPI = {
       return null;
     }
   },
+
+  async getRecommend() {
+    try {
+      const headers = {
+        Authorization: `Bearer ${useAuthStore().userInfo.accessToken}`,
+      };
+      return HTTP_REQUEST.GET(`${baseUrl}/member/recommend`, headers);
+    } catch (error) {
+      console.error(error);
+      return null;
+    }
+  },
 };
 
 export default authAPI;

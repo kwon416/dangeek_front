@@ -47,23 +47,40 @@
     </v-container>
     <v-divider thickness="7" color="#F2F4F6" />
     <v-container>
-      <p class="title-t18-bold pt-5 pb-4" style="color: #2a5fc5">
+      <p
+        class="title-t14-regular pb-6"
+        style="color: #616161; white-space: pre-line"
+      >
+        {{ room.roomDetail.contents }}
+      </p>
+      <p class="title-t18-bold pt-5 pb-4" style="color: #2a5fc5">작성자 소개</p>
+      <p
+        class="title-t14-regular pb-6"
+        style="color: #616161; white-space: pre-line"
+      >
+        {{ room.roomDetail.memberIntroduction.contents }}
+      </p>
+
+      <p class="title-t18-bold pb-4" style="color: #2a5fc5">
         작성자의 생활 습관 및 성향
       </p>
       <div style="gap: 14px 17px; display: flex; flex-wrap: wrap">
-        <CustomChip text="일찍 자고 일어나는 성향" />
-        <CustomChip text="취침 밤 11시" />
-        <CustomChip text="기상 아침 7시" />
-        <CustomChip text="조용한 환경 선호" />
-        <CustomChip text="늦은 시간 시끄러운 활동 불호" />
+        <CustomChip
+          v-for="(personality, index) in room.roomDetail.memberIntroduction
+            .personality"
+          :key="index"
+          :text="personality"
+        />
       </div>
       <p class="title-t18-bold pt-10 pb-4" style="color: #2a5fc5">
         작성자의 취미 및 관심사
       </p>
       <div style="gap: 14px 17px; display: flex; flex-wrap: wrap">
-        <CustomChip text="책읽기" />
-        <CustomChip text="음악감상" />
-        <CustomChip text="주말운동" />
+        <CustomChip
+          v-for="(hobby, index) in room.roomDetail.memberIntroduction.hobbies"
+          :key="index"
+          :text="getHobbyLabel(hobby)"
+        />
       </div>
       <div style="height: 93px"></div>
     </v-container>
@@ -79,6 +96,25 @@
 const route = useRoute();
 const { id } = route.query;
 const room = useRoomStore();
+
+const hobbyLabels = {
+  game: "게임",
+  sports: "스포츠",
+  read: "독서",
+  art: "예술",
+  movie: "영화",
+  collect: "수집",
+  craft: "공예",
+  observe: "관찰",
+  travel: "여행",
+  music: "음악",
+  cook: "요리",
+  photo: "사진",
+};
+
+function getHobbyLabel(hobby) {
+  return hobbyLabels[hobby] || hobby;
+}
 
 onBeforeMount(async () => {
   console.log(id);
