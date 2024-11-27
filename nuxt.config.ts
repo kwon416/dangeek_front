@@ -66,6 +66,14 @@ export default defineNuxtConfig({
     firebase: {
       gen: 2,
     },
+    devProxy: {
+      "/api": {
+        target: "http://13.124.161.93:8080",
+        changeOrigin: true,
+        prependPath: true,
+        secure: false,
+      },
+    },
   },
   piniaPersistedstate: {
     storage: "localStorage",
