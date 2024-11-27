@@ -61,6 +61,25 @@ const chatAPI = {
       return null;
     }
   },
+  async sendMessage(roomId, message) {
+    try {
+      const headers = {
+        Authorization: `Bearer ${useAuthStore().userInfo.accessToken}`,
+      };
+      const data = {
+        message: message,
+      };
+
+      return HTTP_REQUEST.POST(
+        `${baseUrl}/chatroom/talk/${roomId}`,
+        data,
+        headers
+      );
+    } catch (error) {
+      console.error(error);
+      return null;
+    }
+  },
 };
 
 export default chatAPI;

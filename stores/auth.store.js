@@ -47,7 +47,6 @@ export const useAuthStore = defineStore(
       const response = await authAPI.login(username, password);
 
       console.log(response);
-      // Error handling
       if (response) {
         console.log("login success");
         userInfo.value.accessToken = response.accessToken;
@@ -55,6 +54,13 @@ export const useAuthStore = defineStore(
 
         // save accessToken in localStorage
         localStorage.setItem("accessToken", userInfo.value.accessToken);
+
+        // 로그인 성공 후 myPage() 실행하여 사용자 정보 가져오기
+        const myPageResult = await myPage();
+        if (!myPageResult) {
+          console.log("사용자 정보 가져오기 실패");
+          return false;
+        }
 
         return true;
       } else {

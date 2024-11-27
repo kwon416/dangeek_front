@@ -73,7 +73,7 @@
               <v-list-item
                 v-for="index in room.roomList.slice(0, 3)"
                 :key="index"
-                @click="router.push(`/roommate/detail?id=${index.post_id}`)"
+                @click="navigateToDetail('/roommate', index.post_id)"
               >
                 <template v-slot:title>
                   <p class="title-t11-regular-grey mb-2">
@@ -107,7 +107,7 @@
               <v-list-item
                 v-for="index in group.groupList.slice(0, 3)"
                 :key="index"
-                @click="router.push(`/group/detail?id=${index.post_id}`)"
+                @click="navigateToDetail('/group', index.post_id)"
               >
                 <template v-slot:title>
                   <p class="title-t11-regular-grey mb-2">
@@ -131,7 +131,7 @@
         :show-arrows="false"
         style="width: 100vw; margin-left: -24px"
       >
-        <v-slide-group-item v-for="i in 3">
+        <v-slide-group-item>
           <v-card rounded="15" class="justify-center align-center meal-card">
             <template v-slot:title>
               <div class="d-flex">
@@ -141,13 +141,55 @@
                 <IconRice />
               </div>
             </template>
-            <MealContent class="ms-4 mt-3" />
+            <MealContent class="ms-4 mt-3" type="오늘의 조식" />
+          </v-card>
+        </v-slide-group-item>
+
+        <v-slide-group-item>
+          <v-card rounded="15" class="justify-center align-center meal-card">
+            <template v-slot:title>
+              <div class="d-flex">
+                <p class="title-t19-bold me-2" style="color: #fff">
+                  오늘의 중식
+                </p>
+                <IconRice />
+              </div>
+            </template>
+            <MealContent class="ms-4 mt-3" type="오늘의 중식" />
+          </v-card>
+        </v-slide-group-item>
+
+        <v-slide-group-item>
+          <v-card rounded="15" class="justify-center align-center meal-card">
+            <template v-slot:title>
+              <div class="d-flex">
+                <p class="title-t19-bold me-2" style="color: #fff">
+                  내일의 조식
+                </p>
+                <IconRice />
+              </div>
+            </template>
+            <MealContent class="ms-4 mt-3" type="내일의 조식" />
+          </v-card>
+        </v-slide-group-item>
+
+        <v-slide-group-item>
+          <v-card rounded="15" class="justify-center align-center meal-card">
+            <template v-slot:title>
+              <div class="d-flex">
+                <p class="title-t19-bold me-2" style="color: #fff">
+                  내일의 중식
+                </p>
+                <IconRice />
+              </div>
+            </template>
+            <MealContent class="ms-4 mt-3" type="내일의 중식" />
           </v-card>
         </v-slide-group-item>
       </v-slide-group>
     </v-container>
     <v-container>
-      <v-btn block :height="53" color="#CED3DC">
+      <v-btn block :height="53" color="#CED3DC" @click="showDevelopingAlert">
         <p style="color: #585858">외박 신청 하기</p>
       </v-btn>
     </v-container>
@@ -156,7 +198,16 @@
 </template>
 
 <script setup>
+import { useRouter } from "vue-router";
+
 const router = useRouter();
+
+function navigateToDetail(basePath, id) {
+  router.push(basePath).then(() => {
+    router.push(`${basePath}/detail?id=${id}`);
+  });
+}
+
 const windowNumber = ref(0);
 const room = useRoomStore();
 const group = useGroupStore();
@@ -172,6 +223,10 @@ onMounted(async () => {
   await room.getRoomList();
   // await group.getGroupList();
 });
+
+function showDevelopingAlert() {
+  alert("현재 개발중인 기능입니다.");
+}
 </script>
 
 <style scoped>

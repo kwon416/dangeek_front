@@ -5,8 +5,8 @@
         <IconBackBtn style="margin-left: -16px" />
       </v-btn>
       <IconAvatar1 :width="32" :height="32" />
-      <p class="title-t16-bold ps-2">name</p>
-      <p class="title-t16-bold ps-2" style="color: #939393">nickname</p>
+      <p class="title-t16-bold ps-2">{{ roomName }}</p>
+      <!-- <p class="title-t16-bold ps-2" style="color: #939393">nickname</p> -->
       <template v-slot:extension>
         <div class="h-100 px-3 w-100">
           <div
@@ -16,11 +16,11 @@
             진행중
           </div>
           <div class="title-t14-medium" style="color: #939393">
-            일찍자고 일찍 일어나는 룸메이트 구해요
+            자유롭게 채팅해보세요
           </div>
           <div class="chat-progress-bar">
             <v-progress-linear
-              :model-value="50"
+              :model-value="(currentUsers / maxUser) * 100"
               bgColor="grey"
               :rounded="true"
               :roundedBar="true"
@@ -31,9 +31,9 @@
           <div class="main_image">
             <img src="@/assets/icons/roommate/Icon-marker.svg" alt="" />
             <p class="main_image_text title-t11-regular">
-              <span style="color: #2a5fc5">2</span>
+              <span style="color: #2a5fc5">{{ currentUsers }}</span>
               <span>/</span>
-              <span>4</span>
+              <span>{{ maxUser }}</span>
             </p>
           </div>
         </div>
@@ -57,14 +57,16 @@
             </div>
             <!-- 일반 채팅 메시지 -->
             <template v-else>
-              <div v-if="message.type === 'sent'" class="chat-time">
-                {{ formatTime(message.createdAt) }}
-              </div>
-              <div :class="['message', message.type]">
-                <p>{{ message.text }}</p>
-              </div>
-              <div v-if="message.type === 'received'" class="chat-time">
-                {{ formatTime(message.createdAt) }}
+              <div class="message-time-container">
+                <div v-if="message.type === 'sent'" class="chat-time">
+                  {{ formatTime(message.createdAt) }}
+                </div>
+                <div :class="['message', message.type]">
+                  <p>{{ message.badWords ? "***" : message.text }}</p>
+                </div>
+                <div v-if="message.type === 'received'" class="chat-time">
+                  {{ formatTime(message.createdAt) }}
+                </div>
               </div>
             </template>
           </div>
@@ -88,8 +90,14 @@
         @keyup.enter="sendMessage"
         type="text"
         placeholder="메세지 보내기"
+        :disabled="isSending"
       />
-      <IconSend class="ms-3" @click="sendMessage" style="padding-top: 3px" />
+      <IconSend
+        class="ms-3"
+        @click="sendMessage"
+        style="padding-top: 3px"
+        :disabled="isSending"
+      />
     </div>
   </v-main>
 </template>
@@ -99,10 +107,33 @@ const route = useRoute();
 const router = useRouter();
 const chat = useChatStore();
 const roomId = route.query.id;
+const roomName = ref(route.query.name || "");
+const currentUsers = ref(route.query.currentUsers || 0);
+const maxUser = ref(route.query.maxUser || 0);
 const auth = useAuthStore();
 
+const socket = useNuxtApp().socket;
+
+const newMessage = ref("");
 // 채팅 메시지를 저장할 ref
 const messages = ref([]);
+
+const messagesContainer = ref(null);
+
+const stompClient = ref(null);
+
+// 채팅창을 맨 아래로 스크롤하는 함수
+const scrollToBottom = () => {
+  nextTick(() => {
+    const container = messagesContainer.value;
+    if (container) {
+      container.scrollTo({
+        top: container.scrollHeight,
+        behavior: "smooth",
+      });
+    }
+  });
+};
 
 // 컴포넌트가 마운트될 때 채팅 내역 가져오기
 onMounted(async () => {
@@ -119,41 +150,68 @@ onMounted(async () => {
                 : "received",
             senderNickname: msg.senderNickname,
             createdAt: msg.created_at,
+            badWords: msg.badWords,
           };
         } else {
           return {
             text: msg.message,
             type: "notification",
             createdAt: msg.created_at,
+            badWords: false,
           };
         }
       });
+      nextTick(() => {
+        scrollToBottom();
+      });
     }
+
+    // 웹 소켓 연결
+    socket.emit("joinRoom", roomId);
+
+    socket.on("newMessage", (msg) => {
+      messages.value.push({
+        text: msg.text,
+        type:
+          msg.senderNickname === auth.userInfo.nickname ? "sent" : "received",
+        senderNickname: msg.senderNickname,
+        createdAt: msg.createdAt,
+        badWords: msg.badWords,
+      });
+      scrollToBottom();
+    });
   } catch (error) {
     console.error("채팅 내역을 가져오는데 실패했습니다:", error);
   }
 });
 
-const socket = useNuxtApp().socket;
-
-const newMessage = ref("");
-
 onMounted(() => {});
 
-const sendMessage = () => {
-  if (newMessage.value.trim()) {
-    messages.value.push({ text: newMessage.value, type: "sent" });
-    newMessage.value = "";
-  }
-  nextTick(() => {
-    scrollToBottom();
-  });
-};
+const isSending = ref(false); // 메시지 전송 상태
 
-const scrollToBottom = () => {
-  const container = messagesContainer.value;
-  if (container) {
-    container.scrollTop = container.scrollHeight;
+const sendMessage = async () => {
+  if (newMessage.value.trim() && !isSending.value) {
+    isSending.value = true;
+    const result = await chat.sendMessage(roomId, newMessage.value);
+    if (result.success) {
+      if (result.message.badWords) {
+        alert("부적절한 언어가 포함되어 있습니다.");
+      }
+
+      messages.value.push({
+        text: result.message.text,
+        type: "sent",
+        senderNickname: result.message.senderNickname,
+        createdAt: result.message.createdAt,
+        badWords: result.message.badWords,
+      });
+      newMessage.value = "";
+
+      scrollToBottom();
+    } else {
+      console.error("메시지 전송에 실패했습니다.");
+    }
+    isSending.value = false;
   }
 };
 
@@ -170,15 +228,9 @@ const formatTime = (dateString) => {
 const confirmExit = async () => {
   if (confirm("퇴장하시겠습니까?")) {
     const result = await chat.exitChatroom(roomId);
-    if (result.success) {
+    if (result) {
       console.log("채팅방에서 퇴장했습니다.");
-      if (!auth.userInfo.surveyDone) {
-        // 설문조사가 필요하고 아직 하지 않은 경우
-        router.push(`/survey/${roomId}`);
-      } else {
-        // 설문조사가 이미 완료된 경우
-        router.push("/chat");
-      }
+      router.push("/chat"); // 채팅 목록 페이지로 이동
     } else {
       console.error("퇴장 처리 중 오류가 발생했습니다.");
     }
@@ -226,6 +278,7 @@ const confirmExit = async () => {
   max-width: 80%;
   word-wrap: break-word;
   position: relative;
+  text-align: left;
 }
 .message-wrapper.sent {
   align-self: end;
@@ -361,5 +414,26 @@ const confirmExit = async () => {
   font-style: normal;
   font-weight: 500;
   line-height: 20px;
+}
+
+.message-time-container {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.message-wrapper.sent .message-time-container {
+  justify-content: flex-end;
+}
+
+.chat-time {
+  color: #919191;
+  font-family: Pretendard;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 20px;
+  min-width: fit-content;
+  margin-bottom: 10px;
 }
 </style>

@@ -50,10 +50,24 @@ export const useChatStore = defineStore(
       console.log(response);
       if (response) {
         console.log("sendMessage success");
-        return true;
+        return {
+          success: true,
+          message: {
+            type: response.type,
+            roomId: response.roomId,
+            text: response.message,
+            senderId: response.senderId,
+            senderNickname: response.senderNickname,
+            createdAt: response.created_at,
+            badWords: response.badWords,
+          },
+        };
       } else {
         console.log("sendMessage failed");
-        return false;
+        return {
+          success: false,
+          message: null,
+        };
       }
     }
 

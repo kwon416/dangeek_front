@@ -32,7 +32,17 @@
         <v-card
           rounded="15"
           class="py-0"
-          @click="router.push(`/chat/detail?id=${room.id}`)"
+          @click="
+            router.push({
+              path: '/chat/detail',
+              query: {
+                id: room.id,
+                name: room.name,
+                currentUsers: room.currentUsers,
+                maxUser: room.maxUser,
+              },
+            })
+          "
         >
           <template v-slot:prepend>
             <IconAvatar1 class="me-2" width="50" height="50" />
@@ -77,7 +87,12 @@ definePageMeta({
 });
 
 onMounted(async () => {
-  await chat.getMyRooms();
+  try {
+    await auth.myPage();
+    await chat.getMyRooms();
+  } catch (error) {
+    console.error("Failed to fetch user info:", error);
+  }
 });
 
 function formatDate(date) {

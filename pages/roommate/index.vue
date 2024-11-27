@@ -17,7 +17,7 @@
       <IconMy class="ms-5" @click="router.push('/my')" />
     </v-app-bar>
     <v-slide-group
-      v-if="auth.userInfo.introductionWritten"
+      v-if="auth.userInfo.introductionWritten && auth.userInfo.surveyDone"
       :show-arrows="false"
       class="mt-9 mb-5"
     >
@@ -64,11 +64,19 @@
       </v-slide-group-item>
     </v-slide-group>
     <v-container
-      v-else
+      v-else-if="!auth.userInfo.introductionWritten"
       style="justify-content: center; align-items: center; display: flex"
     >
       <v-btn color="#F2F4F6" @click="router.push('/my/introduce')">
         <p style="color: #595959">자기소개 작성하러 가기</p>
+      </v-btn>
+    </v-container>
+    <v-container
+      v-else-if="!auth.userInfo.surveyDone"
+      style="justify-content: center; align-items: center; display: flex"
+    >
+      <v-btn color="#F2F4F6" @click="router.push('/my/survey')">
+        <p style="color: #595959">설문조사 하러 가기</p>
       </v-btn>
     </v-container>
     <v-container style="background-color: #f2f4f6">
@@ -160,14 +168,17 @@ const roommates = definePageMeta({
   layout: "home",
 });
 
-onBeforeMount(async () => {
-  await auth.myPage();
-  await room.getRoomList();
-  if (auth.userInfo.introductionWritten) {
-    const response = await auth.getRecommend();
-    if (response) {
-      recommendList.value = response;
+onMounted(async () => {
+  try {
+    await auth.myPage();
+    if (auth.userInfo.introductionWritten && auth.userInfo.surveyDone) {
+      const response = await auth.getRecommend();
+      if (response) {
+        recommendList.value = response;
+      }
     }
+  } catch (error) {
+    console.error("Failed to fetch user info or recommendations:", error);
   }
 });
 </script>
@@ -224,7 +235,7 @@ onBeforeMount(async () => {
   position: absolute;
 }
 
-/* 프레젠테이션 프로필 이름 div */
+/* 프레젠테이션 프로필 ��름 div */
 .presentation_profile_name {
   width: 84px;
   color: #000;
