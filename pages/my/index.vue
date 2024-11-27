@@ -45,6 +45,22 @@
       />
       <v-list-item class="px-6">
         <v-list-item-title class="title-t18-bold">
+          생활 습관 및 성향 작성 여부
+        </v-list-item-title>
+        <template v-slot:prepend>
+          <IconDocument class="me-4" />
+        </template>
+        <template v-slot:append>
+          <p>{{ auth.userInfo.surveyDone ? "작성" : "미작성" }}</p>
+        </template>
+      </v-list-item>
+      <v-divider
+        class="border-opacity-100 my-2"
+        color="#E8E8E8"
+        thickness="2"
+      />
+      <v-list-item class="px-6">
+        <v-list-item-title class="title-t18-bold">
           룸메 추천 노출 여부
         </v-list-item-title>
         <p class="title-t11-regular-grey">

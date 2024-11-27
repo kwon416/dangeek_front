@@ -12,6 +12,7 @@ export const useAuthStore = defineStore(
       refreshToken: "",
       introductionWritten: false,
       putOnRecommend: false,
+      surveyDone: false,
     });
 
     const userIntroduce = ref({
@@ -74,6 +75,7 @@ export const useAuthStore = defineStore(
         userInfo.value.nickname = response.nickname;
         userInfo.value.introductionWritten = response.introductionWritten;
         userInfo.value.putOnRecommend = response.putOnRecommend;
+        userInfo.value.surveyDone = response.surveyDone;
         return true;
       } else {
         console.log("myPage failed");

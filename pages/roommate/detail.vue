@@ -85,7 +85,13 @@
       <div style="height: 93px"></div>
     </v-container>
     <div class="pb-10 bottom-btn-wrapper">
-      <v-btn block class="v-btn__gradient" rounded="15" height="53">
+      <v-btn
+        block
+        class="v-btn__gradient"
+        rounded="15"
+        height="53"
+        @click="handleEnterChat"
+      >
         <p class="title-t18-bold">채팅 신청하기</p>
       </v-btn>
     </div>
@@ -94,8 +100,10 @@
 
 <script setup>
 const route = useRoute();
+const router = useRouter();
 const { id } = route.query;
 const room = useRoomStore();
+const chat = useChatStore();
 
 const hobbyLabels = {
   game: "게임",
@@ -120,6 +128,22 @@ onBeforeMount(async () => {
   console.log(id);
   await room.getDetail(id);
 });
+
+async function handleEnterChat() {
+  try {
+    const roomId = await chat.enterChatroom(
+      room.roomDetail.chatRoomResponseDto.id
+    );
+    if (roomId) {
+      await router.push("/chat");
+      await router.push(`/chat/detail?roomId=${roomId}`);
+    } else {
+      console.error("채팅방 생성에 실패했습니다.");
+    }
+  } catch (error) {
+    console.error("채팅 신청 중 오류가 발생했습니다:", error);
+  }
+}
 </script>
 
 <style lang="scss" scoped>

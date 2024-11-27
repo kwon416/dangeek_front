@@ -4,7 +4,10 @@
       <IconConfetti />
       <div style="height: 60px; margin-left: 14px; margin-top: auto">
         <p class="title">
-          <span style="color: #79a1e6; font-size: 20px">name</span> 님을 위한
+          <span style="color: #79a1e6; font-size: 20px">{{
+            auth.userInfo.nickname
+          }}</span>
+          님을 위한
         </p>
         <p class="title">룸메이트 추천!</p>
       </div>
@@ -24,7 +27,21 @@
       >
         <div
           class="presentation_profile"
-          @click="router.push('/roommate/story')"
+          @click="
+            router.push({
+              path: '/roommate/story',
+              query: {
+                id: recommend.id,
+                name: recommend.name,
+                contents: recommend.contents,
+                grade: recommend.grade,
+                major: recommend.major,
+                sex: recommend.sex,
+                personality: recommend.personality.join(','),
+                hobbies: recommend.hobbies.join(','),
+              },
+            })
+          "
         >
           <div class="presentation_profile_image">
             <div class="presentation_profile_image_border"></div>
@@ -42,7 +59,7 @@
               <IconAvatar3 v-else :width="60" :height="60" />
             </div>
           </div>
-          <p class="presentation_profile_name">{{ recommend.nickname }}</p>
+          <p class="presentation_profile_name">{{ recommend.name }}</p>
         </div>
       </v-slide-group-item>
     </v-slide-group>
@@ -86,8 +103,9 @@
           <v-spacer></v-spacer>
           <v-progress-linear
             :model-value="
-              (index.chatRoomResponseDto?.currentUsers ??
-                0 / (index.chatRoomResponseDto?.maxUser ?? 4)) * 100
+              (index.chatRoomResponseDto?.currentUsers /
+                index.chatRoomResponseDto?.maxUser) *
+              100
             "
             bgColor="grey"
             :rounded="true"

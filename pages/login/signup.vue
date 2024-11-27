@@ -373,8 +373,8 @@ const submit = async (event) => {
 
   try {
     // 학교 인증 이메일 발송 API 호출
-    // const response = await auth.verifyEmail(username.value);
-    const response = true;
+    const response = await auth.verifyEmail(username.value);
+    // const response = true;
 
     if (response) {
       windowNumber.value = 1; // 이메일 인증 화면으로 이동

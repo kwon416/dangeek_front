@@ -28,20 +28,24 @@
       </v-text-field>
     </v-container>
     <v-list bg-color="#fff">
-      <v-list-item v-for="i in 8" class="px-0">
-        <v-card rounded="15" class="py-0" @click="router.push('/chat/detail')">
+      <v-list-item v-for="room in chat.myRooms" :key="room.id" class="px-0">
+        <v-card
+          rounded="15"
+          class="py-0"
+          @click="router.push(`/chat/detail?id=${room.id}`)"
+        >
           <template v-slot:prepend>
             <IconAvatar1 class="me-2" width="50" height="50" />
           </template>
           <template v-slot:title>
             <div class="d-flex">
-              <p class="title-t16-medium me-2">닉네임</p>
+              <p class="title-t16-medium me-2">{{ room.name }}</p>
               <v-badge color="#FF4841" content="1" inline></v-badge>
             </div>
           </template>
           <template v-slot:subtitle>
             <p class="title-t13-grey mt-2" style="color: #939393">
-              000 게시물에 채팅을 신청하셨어요
+              참여 인원: {{ room.currentUsers }}/{{ room.maxUser }}
             </p>
           </template>
           <template v-slot:append>
@@ -49,7 +53,7 @@
               class="title-t11-regular"
               style="color: #b2b2b2; margin-top: 20px"
             >
-              2024.05.05
+              {{ formatDate(new Date()) }}
             </p>
           </template>
         </v-card>
@@ -60,13 +64,53 @@
 </template>
 
 <script setup>
+import { ref } from "vue";
+
 const auth = useAuthStore();
+const router = useRouter();
+const chat = useChatStore();
+
 definePageMeta({
   title: "Chat",
   description: "Chat page",
   layout: "home",
 });
-const router = useRouter();
+
+onMounted(async () => {
+  await chat.getMyRooms();
+});
+
+function formatDate(date) {
+  const now = new Date();
+  const targetDate = new Date(date);
+
+  // 같은 날짜인지 확인
+  const isToday =
+    targetDate.getFullYear() === now.getFullYear() &&
+    targetDate.getMonth() === now.getMonth() &&
+    targetDate.getDate() === now.getDate();
+
+  if (isToday) {
+    // 오늘인 경우 시간만 표시
+    return new Intl.DateTimeFormat("ko-KR", {
+      hour: "2-digit",
+      minute: "2-digit",
+    }).format(date);
+  } else {
+    // 다른 날짜인 경우 년.월.일 형식으로 표시
+    return new Intl.DateTimeFormat("ko-KR", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    }).format(date);
+  }
+}
+
+// 현재 시간을 1분마다 업데이트
+const currentTime = ref(new Date());
+setInterval(() => {
+  currentTime.value = new Date();
+}, 60000);
 </script>
 
 <style lang="scss" scoped>

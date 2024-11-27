@@ -46,18 +46,27 @@
           <div
             v-for="(message, index) in messages"
             :key="index"
-            style="display: flex"
             :class="['message-wrapper', message.type]"
           >
-            <div v-if="message.type === 'sent'" class="chat-time">
-              오후 12:15
+            <!-- 입장/퇴장 메시지 -->
+            <div
+              v-if="message.type === 'notification'"
+              class="notification-message"
+            >
+              {{ message.text }}
             </div>
-            <div :class="['message', message.type]">
-              <p>{{ message.text }}</p>
-            </div>
-            <div v-if="message.type === 'received'" class="chat-time">
-              오후 12:15
-            </div>
+            <!-- 일반 채팅 메시지 -->
+            <template v-else>
+              <div v-if="message.type === 'sent'" class="chat-time">
+                {{ formatTime(message.createdAt) }}
+              </div>
+              <div :class="['message', message.type]">
+                <p>{{ message.text }}</p>
+              </div>
+              <div v-if="message.type === 'received'" class="chat-time">
+                {{ formatTime(message.createdAt) }}
+              </div>
+            </template>
           </div>
         </div>
       </div>
@@ -68,6 +77,7 @@
         color="#656565"
         size="30"
         style="margin-top: 5px; margin-right: 8px"
+        @click="confirmExit"
       ></v-icon>
       <v-text-field
         v-model="newMessage"
@@ -85,11 +95,45 @@
 </template>
 
 <script setup>
+const route = useRoute();
 const router = useRouter();
-const messages = ref([
-  { text: "Hello!", type: "received" },
-  { text: "Hi there!", type: "sent" },
-]);
+const chat = useChatStore();
+const roomId = route.query.id;
+const auth = useAuthStore();
+
+// 채팅 메시지를 저장할 ref
+const messages = ref([]);
+
+// 컴포넌트가 마운트될 때 채팅 내역 가져오기
+onMounted(async () => {
+  try {
+    const chatHistory = await chat.getChatting(roomId);
+    if (chatHistory) {
+      messages.value = chatHistory.map((msg) => {
+        if (msg.type === "TALK") {
+          return {
+            text: msg.message,
+            type:
+              msg.senderNickname === auth.userInfo.nickname
+                ? "sent"
+                : "received",
+            senderNickname: msg.senderNickname,
+            createdAt: msg.created_at,
+          };
+        } else {
+          return {
+            text: msg.message,
+            type: "notification",
+            createdAt: msg.created_at,
+          };
+        }
+      });
+    }
+  } catch (error) {
+    console.error("채팅 내역을 가져오는데 실패했습니다:", error);
+  }
+});
+
 const socket = useNuxtApp().socket;
 
 const newMessage = ref("");
@@ -110,6 +154,34 @@ const scrollToBottom = () => {
   const container = messagesContainer.value;
   if (container) {
     container.scrollTop = container.scrollHeight;
+  }
+};
+
+// 시간 포맷팅 함수
+const formatTime = (dateString) => {
+  const date = new Date(dateString);
+  const hours = date.getHours();
+  const minutes = date.getMinutes().toString().padStart(2, "0");
+  const ampm = hours >= 12 ? "오후" : "오전";
+  const formattedHours = hours % 12 || 12;
+  return `${ampm} ${formattedHours}:${minutes}`;
+};
+
+const confirmExit = async () => {
+  if (confirm("퇴장하시겠습니까?")) {
+    const result = await chat.exitChatroom(roomId);
+    if (result.success) {
+      console.log("채팅방에서 퇴장했습니다.");
+      if (!auth.userInfo.surveyDone) {
+        // 설문조사가 필요하고 아직 하지 않은 경우
+        router.push(`/survey/${roomId}`);
+      } else {
+        // 설문조사가 이미 완료된 경우
+        router.push("/chat");
+      }
+    } else {
+      console.error("퇴장 처리 중 오류가 발생했습니다.");
+    }
   }
 };
 </script>
@@ -244,5 +316,50 @@ const scrollToBottom = () => {
 
 .input-area button:hover {
   background-color: #0056b3;
+}
+
+.notification-message {
+  background-color: #f0f0f0;
+  padding: 10px;
+  border-radius: 5px;
+  margin: 10px 0;
+  color: #333;
+  font-family: Pretendard;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 20px; /* 153.846% */
+}
+
+.message-wrapper {
+  display: flex;
+  flex-direction: column;
+  margin: 5px 0;
+}
+
+.message-wrapper.sent {
+  align-items: flex-end;
+}
+
+.message-wrapper.received {
+  align-items: flex-start;
+}
+
+.notification-message {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f0f0f0;
+  padding: 10px;
+  border-radius: 5px;
+  margin: 10px auto;
+  text-align: center;
+  color: #919191;
+  font-family: Pretendard;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 20px;
 }
 </style>
