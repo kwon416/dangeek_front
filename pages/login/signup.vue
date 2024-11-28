@@ -111,7 +111,6 @@
             <v-btn
               class="v-btn__gradient"
               :loading="loading"
-              :disabled="certNumber.length == 4 ? false : true"
               text="인증완료"
               @click="submitValidate(event)"
               block
