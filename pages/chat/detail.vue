@@ -134,38 +134,38 @@ const scrollToBottom = () => {
     }
   });
 };
-
+const getChatting = async () => {
+  const chatHistory = await chat.getChatting(roomId);
+  if (chatHistory) {
+    messages.value = chatHistory.map((msg) => {
+      if (msg.type === "TALK") {
+        return {
+          text: msg.message,
+          type:
+            msg.senderNickname === auth.userInfo.nickname ? "sent" : "received",
+          senderNickname: msg.senderNickname,
+          createdAt: msg.created_at,
+          badWords: msg.badWords,
+        };
+      } else {
+        return {
+          text: msg.message,
+          type: "notification",
+          createdAt: msg.created_at,
+          badWords: false,
+        };
+      }
+    });
+    nextTick(() => {
+      scrollToBottom();
+    });
+  }
+};
 // 컴포넌트가 마운트될 때 채팅 내역 가져오기
 onMounted(async () => {
   try {
-    const chatHistory = await chat.getChatting(roomId);
-    if (chatHistory) {
-      messages.value = chatHistory.map((msg) => {
-        if (msg.type === "TALK") {
-          return {
-            text: msg.message,
-            type:
-              msg.senderNickname === auth.userInfo.nickname
-                ? "sent"
-                : "received",
-            senderNickname: msg.senderNickname,
-            createdAt: msg.created_at,
-            badWords: msg.badWords,
-          };
-        } else {
-          return {
-            text: msg.message,
-            type: "notification",
-            createdAt: msg.created_at,
-            badWords: false,
-          };
-        }
-      });
-      nextTick(() => {
-        scrollToBottom();
-      });
-    }
-
+    await getChatting();
+    await setInterval(getChatting, 2000);
     // 웹 소켓 연결
     socket.emit("joinRoom", roomId);
 
