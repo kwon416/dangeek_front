@@ -136,7 +136,7 @@ async function handleEnterChat() {
     );
     if (roomId) {
       await router.push("/chat");
-      await router.push(`/chat/detail?roomId=${roomId}`);
+      // await router.push(`/chat/detail?roomId=${roomId}`);
     } else {
       console.error("채팅방 생성에 실패했습니다.");
     }
