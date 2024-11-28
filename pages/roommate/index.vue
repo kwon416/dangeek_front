@@ -171,6 +171,7 @@ const roommates = definePageMeta({
 onMounted(async () => {
   try {
     await auth.myPage();
+    await room.getRoomList();
     if (auth.userInfo.introductionWritten && auth.userInfo.surveyDone) {
       const response = await auth.getRecommend();
       if (response) {
