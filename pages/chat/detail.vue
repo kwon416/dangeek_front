@@ -135,54 +135,6 @@ const scrollToBottom = () => {
   });
 };
 
-// 채팅 내역 새로고침 함수
-const refreshChatHistory = async () => {
-  try {
-    const chatHistory = await chat.getChatting(roomId);
-    if (chatHistory) {
-      // 새로운 메시지와 기존 메시지를 비교하여 중복 방지
-      const newMessagesList = chatHistory.filter(
-        (newMsg) =>
-          !messages.value.some(
-            (existingMsg) =>
-              existingMsg.text === newMsg.message &&
-              existingMsg.createdAt === newMsg.created_at
-          )
-      );
-
-      // 새로운 메시지만 추가
-      const formattedNewMessages = newMessagesList.map((msg) => {
-        if (msg.type === "TALK") {
-          return {
-            text: msg.message,
-            type:
-              msg.senderNickname === auth.userInfo.nickname
-                ? "sent"
-                : "received",
-            senderNickname: msg.senderNickname,
-            createdAt: msg.created_at,
-            badWords: msg.badWords,
-          };
-        } else {
-          return {
-            text: msg.message,
-            type: "notification",
-            createdAt: msg.created_at,
-            badWords: false,
-          };
-        }
-      });
-
-      // 새로운 메시지 추가
-      messages.value = [...messages.value, ...formattedNewMessages];
-
-      scrollToBottom();
-    }
-  } catch (error) {
-    console.error("채팅 내역을 새로고침하는데 실패했습니다:", error);
-  }
-};
-
 // 컴포넌트가 마운트될 때 채팅 내역 가져오기
 onMounted(async () => {
   try {
@@ -228,19 +180,12 @@ onMounted(async () => {
       });
       scrollToBottom();
     });
-
-    // 1초마다 채팅 내역 새로고침
-    const refreshInterval = setInterval(refreshChatHistory, 1000);
-
-    // 컴포넌트 언마운트 시 인터벌 정리
-    onUnmounted(() => {
-      clearInterval(refreshInterval);
-      socket.off("newMessage");
-    });
   } catch (error) {
     console.error("채팅 내역을 가져오는데 실패했습니다:", error);
   }
 });
+
+onMounted(() => {});
 
 const isSending = ref(false); // 메시지 전송 상태
 
@@ -292,6 +237,7 @@ const confirmExit = async () => {
   }
 };
 </script>
+
 <style scoped>
 .main_image {
   position: absolute;
