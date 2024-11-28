@@ -112,11 +112,15 @@ const currentUsers = ref(route.query.currentUsers || 0);
 const maxUser = ref(route.query.maxUser || 0);
 const auth = useAuthStore();
 
+const socket = useNuxtApp().socket;
+
 const newMessage = ref("");
+// 채팅 메시지를 저장할 ref
 const messages = ref([]);
+
 const messagesContainer = ref(null);
-const isSending = ref(false);
-const lastMessageId = ref(null);
+
+const stompClient = ref(null);
 
 // 채팅창을 맨 아래로 스크롤하는 함수
 const scrollToBottom = () => {
@@ -131,13 +135,23 @@ const scrollToBottom = () => {
   });
 };
 
-// 폴링으로 새 메시지 가져오기
-const pollChatMessages = async () => {
+// 채팅 내역 새로고침 함수
+const refreshChatHistory = async () => {
   try {
-    const newMessages = await chat.getNewMessages(roomId, lastMessageId.value);
+    const chatHistory = await chat.getChatting(roomId);
+    if (chatHistory) {
+      // 새로운 메시지와 기존 메시지를 비교하여 중복 방지
+      const newMessagesList = chatHistory.filter(
+        (newMsg) =>
+          !messages.value.some(
+            (existingMsg) =>
+              existingMsg.text === newMsg.message &&
+              existingMsg.createdAt === newMsg.created_at
+          )
+      );
 
-    if (newMessages && newMessages.length > 0) {
-      const formattedMessages = newMessages.map((msg) => {
+      // 새로운 메시지만 추가
+      const formattedNewMessages = newMessagesList.map((msg) => {
         if (msg.type === "TALK") {
           return {
             text: msg.message,
@@ -159,22 +173,17 @@ const pollChatMessages = async () => {
         }
       });
 
-      // 새 메시지 추가 및 마지막 메시지 ID 업데이트
-      messages.value = [...messages.value, ...formattedMessages];
-
-      // 마지막 메시지의 ID 업데이트
-      if (newMessages.length > 0) {
-        lastMessageId.value = newMessages[newMessages.length - 1].id;
-      }
+      // 새로운 메시지 추가
+      messages.value = [...messages.value, ...formattedNewMessages];
 
       scrollToBottom();
     }
   } catch (error) {
-    console.error("채팅 내역을 가져오는데 실패했습니다:", error);
+    console.error("채팅 내역을 새로고침하는데 실패했습니다:", error);
   }
 };
 
-// 컴포넌트가 마운트될 때 초기 채팅 내역 가져오기
+// 컴포넌트가 마운트될 때 채팅 내역 가져오기
 onMounted(async () => {
   try {
     const chatHistory = await chat.getChatting(roomId);
@@ -200,26 +209,40 @@ onMounted(async () => {
           };
         }
       });
-
-      // 마지막 메시지의 ID 설정
-      if (messages.value.length > 0) {
-        lastMessageId.value = chatHistory[chatHistory.length - 1].id;
-      }
-
-      scrollToBottom();
+      nextTick(() => {
+        scrollToBottom();
+      });
     }
 
-    // 1초마다 새 메시지 폴링
-    const pollingInterval = setInterval(pollChatMessages, 1000);
+    // 웹 소켓 연결
+    socket.emit("joinRoom", roomId);
 
-    // 컴포넌트 언마운트 시 폴링 중지
+    socket.on("newMessage", (msg) => {
+      messages.value.push({
+        text: msg.text,
+        type:
+          msg.senderNickname === auth.userInfo.nickname ? "sent" : "received",
+        senderNickname: msg.senderNickname,
+        createdAt: msg.createdAt,
+        badWords: msg.badWords,
+      });
+      scrollToBottom();
+    });
+
+    // 1초마다 채팅 내역 새로고침
+    const refreshInterval = setInterval(refreshChatHistory, 1000);
+
+    // 컴포넌트 언마운트 시 인터벌 정리
     onUnmounted(() => {
-      clearInterval(pollingInterval);
+      clearInterval(refreshInterval);
+      socket.off("newMessage");
     });
   } catch (error) {
     console.error("채팅 내역을 가져오는데 실패했습니다:", error);
   }
 });
+
+const isSending = ref(false); // 메시지 전송 상태
 
 const sendMessage = async () => {
   if (newMessage.value.trim() && !isSending.value) {
@@ -247,7 +270,7 @@ const sendMessage = async () => {
   }
 };
 
-// 시간 포맷팅 함수 (이전과 동일)
+// 시간 포맷팅 함수
 const formatTime = (dateString) => {
   const date = new Date(dateString);
   const hours = date.getHours();
