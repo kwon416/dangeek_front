@@ -14,9 +14,11 @@ export default defineNuxtConfig({
       // script: [{ type: "text/javascript", src: "/js/appCtr.js" }],
     },
   },
+
   build: {
     transpile: ["vuetify"],
   },
+
   colorMode: {
     preference: "light", // default value of $colorMode.preference
     fallback: "light", // fallback value if not system preference found
@@ -27,13 +29,17 @@ export default defineNuxtConfig({
     classSuffix: "-mode",
     storageKey: "nuxt-color-mode",
   },
+
   components: [{ path: "~/components", pathPrefix: false }],
+
   css: [
     "vuetify/lib/styles/main.sass",
     "@/assets/fonts/main.css",
     "~/assets/css/style.css",
   ],
+
   devtools: { enabled: true },
+
   io: {
     sockets: [
       {
@@ -42,6 +48,7 @@ export default defineNuxtConfig({
       },
     ],
   },
+
   modules: [
     "@nuxt/ui",
     "nuxt-socket-io",
@@ -62,6 +69,7 @@ export default defineNuxtConfig({
       });
     },
   ],
+
   nitro: {
     firebase: {
       gen: 2,
@@ -75,24 +83,32 @@ export default defineNuxtConfig({
       },
     },
   },
+
   piniaPersistedstate: {
     storage: "localStorage",
   },
+
   plugins: [{ src: "~/plugins/socket.client.js", mode: "client" }],
+
   runtimeConfig: {
     public: {
-      API_BASE_URL: process.env.API_BASE_URL || "http://13.124.161.93:8080",
+      API_BASE_URL: process.env.API_BASE_URL || "https://dnd5301.codns.com",
+      // API_BASE_URL: process.env.API_BASE_URL || "https://13.124.161.93:8080",
     },
   },
+
   ssr: false,
+
   sourcemap: {
     server: false,
     client: false,
   },
+
   ui: {
     global: true,
     icons: ["mdi", "simple-icons"],
   },
+
   vite: {
     vue: {
       template: {
